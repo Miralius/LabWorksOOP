@@ -1,5 +1,5 @@
 package functions;
 
 public interface MathFunction {
-    /.ыыыыыыыыыыыыыы
+    public double apply(double x)
 }
