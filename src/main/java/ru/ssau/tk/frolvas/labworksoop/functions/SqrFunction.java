@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.frolvas.labworksoop.functions;
 
 public class SqrFunction implements MathFunction {
     @Override

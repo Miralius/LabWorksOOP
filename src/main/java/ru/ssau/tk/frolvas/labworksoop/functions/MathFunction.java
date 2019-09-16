@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.frolvas.labworksoop.functions;
 
 public interface MathFunction {
     double apply(double x);

@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.frolvas.labworksoop.functions;
 
 public class MockTabulatedFunction extends AbstractTabulatedFunction {
     private final double x0 = 1, x1 = 3, y0 = 5, y1 = 7;

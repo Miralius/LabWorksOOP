@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import static org.testng.Assert.*;
 
