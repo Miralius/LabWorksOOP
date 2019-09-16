@@ -1,7 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 public class UnitFunction extends ConstantFunction {
-    UnitFunction() {
+    public UnitFunction() {
         super(1);
     }
 }
