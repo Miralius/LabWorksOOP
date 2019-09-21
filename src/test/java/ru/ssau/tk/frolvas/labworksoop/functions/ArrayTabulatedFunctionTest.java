@@ -153,4 +153,14 @@ public class ArrayTabulatedFunctionTest {
         definedThroughCompositeFunction.setY(4, 1000.);
         assertEquals(definedThroughCompositeFunction.getY(4), 1000., 1E-12);
     }
+
+    @Test
+    public void testRemove() {
+        definedThroughArrays.remove(0);
+        assertEquals(definedThroughArrays.leftBound(), -2., 1E-12);
+        definedThroughArrays.remove(5);
+        assertEquals(definedThroughArrays.getX(5), 4., 1E-12);
+        definedThroughArrays.remove(6);
+        assertEquals(definedThroughArrays.rightBound(), 4., 1E-12);
+    }
 }
