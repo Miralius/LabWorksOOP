@@ -5,10 +5,7 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x <= getY(1)) {
-        }
-        setY(0, 0.1);
-        return (int) getX((int) x);
+        return 0;
     }
 
     @Override
@@ -33,7 +30,7 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public int indexOfY(double y) {
-        return (int) getY((int) y);
+        return 0;
     }
 
     @Override
@@ -64,7 +61,7 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public void setY(int index, double value) {
-        if (getCount() == 2) if (indexOfY(1.) == 1) {};
+
     }
 
 }
