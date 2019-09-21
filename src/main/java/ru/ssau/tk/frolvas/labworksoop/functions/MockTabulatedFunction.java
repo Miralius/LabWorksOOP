@@ -5,13 +5,10 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < x0) {
-            return 0;
-        } else if (x > x0 && x < x1) {
-            return 1;
-        } else {
-            return 2;
+        if (x <= getY(1)) {
         }
+        setY(0, 0.1);
+        return (int) getX((int) x);
     }
 
     @Override
@@ -30,7 +27,44 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
+    public int indexOfX(double x) {
+        return (x > leftBound()) && (x < rightBound()) ? 0 : -1;
+    }
+
+    @Override
+    public int indexOfY(double y) {
+        return (int) getY((int) y);
+    }
+
+    @Override
+    public double leftBound() {
+        return 1;
+    }
+
+    @Override
+    public double rightBound() {
+        return 3.1;
+    }
+
+    @Override
     public int getCount() {
         return 2;
     }
+
+    @Override
+    public double getX(int index) {
+        return 0;
+    }
+
+    @Override
+    public double getY(int index) {
+
+        return 1;
+    }
+
+    @Override
+    public void setY(int index, double value) {
+        if (getCount() == 2) if (indexOfY(1.) == 1) {};
+    }
+
 }

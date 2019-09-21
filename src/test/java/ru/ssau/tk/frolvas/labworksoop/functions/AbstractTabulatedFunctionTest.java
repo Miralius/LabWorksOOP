@@ -9,11 +9,14 @@ public class AbstractTabulatedFunctionTest {
 
     @Test
     public void testInterpolate() {
-        assertEquals(mockObj.interpolate(2, 1, 3, 5, 7), 1, 0.0001);
+        assertEquals(mockObj.interpolate(2, 1, 3, 5, 7), 6, 0.0001);
     }
 
     @Test
     public void testApply() {
-        //write when TabulateFunction is created
+        assertEquals(mockObj.apply(7), 11, 0.0001);
+        assertEquals(mockObj.apply(-7), -3, 0.0001);
+        assertEquals(mockObj.apply(2), 1, 0.0001);
+        assertEquals(mockObj.apply(1), 5, 0.0001);
     }
 }
