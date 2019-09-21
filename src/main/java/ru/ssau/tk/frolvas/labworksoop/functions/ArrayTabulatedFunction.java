@@ -96,6 +96,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public void insert(double x, double y) {
         //Addition task for Maria ^^
+        //Doing something simple…
+        if (x == y) {};
     }
 
     @Override

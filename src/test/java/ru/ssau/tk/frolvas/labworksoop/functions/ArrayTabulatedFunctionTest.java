@@ -156,11 +156,19 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void testRemove() {
-        definedThroughArrays.remove(0);
-        assertEquals(definedThroughArrays.leftBound(), -2., 1E-12);
-        definedThroughArrays.remove(5);
-        assertEquals(definedThroughArrays.getX(5), 4., 1E-12);
-        definedThroughArrays.remove(6);
-        assertEquals(definedThroughArrays.rightBound(), 4., 1E-12);
+        double[] valuesX = new double[]{-3., -2., -1, -0., 1., 2., 3., 4., 5.};
+        double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
+        ArrayTabulatedFunction testRemoveArray = new ArrayTabulatedFunction(valuesX, valuesY);
+        testRemoveArray.remove(0);
+        assertEquals(testRemoveArray.leftBound(), -2., 1E-12);
+        testRemoveArray.remove(5);
+        assertEquals(testRemoveArray.getX(5), 4., 1E-12);
+        testRemoveArray.remove(6);
+        assertEquals(testRemoveArray.rightBound(), 4., 1E-12);
+    }
+
+    @Test
+    public void testInsert() {
+        definedThroughArrays.insert(5., 7.);
     }
 }
