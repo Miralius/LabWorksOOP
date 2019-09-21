@@ -121,4 +121,36 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(definedThroughMathFunction.getY(0), 1009., 1E-12);
         assertEquals(unitArray.getY(0), 9., 1E-12);
     }
+
+    //Additional test for composite function
+    @Test
+    public void testArrayCreatedThroughCompositeFunction() {
+        MathFunction cubeFunc = new Cube();
+        MathFunction sqrtFunc = new SqrtFunction();
+        MathFunction compositeFunc = sqrtFunc.andThen(cubeFunc);
+        ArrayTabulatedFunction definedThroughCompositeFunction = new ArrayTabulatedFunction(compositeFunc, 4, 8, 5);
+        assertEquals(definedThroughCompositeFunction.floorIndexOfX(30.), 5);
+        assertEquals(definedThroughCompositeFunction.floorIndexOfX(-4.), 0);
+        for (int i = 5; i < 9; i++) {
+            assertEquals(definedThroughCompositeFunction.floorIndexOfX(i - 0.5), i - 5);
+        }
+        assertEquals(definedThroughCompositeFunction.extrapolateLeft(3), 4.819660112502, 1E-12);
+        assertEquals(definedThroughCompositeFunction.extrapolateRight(9), 26.734574818486, 1E-12);
+        assertEquals(definedThroughCompositeFunction.interpolate(5.5, definedThroughCompositeFunction.floorIndexOfX(5.5)), 12.938639172099, 1E-12);
+        assertEquals(definedThroughCompositeFunction.indexOfX(4.), 0);
+        assertEquals(definedThroughCompositeFunction.indexOfX(1.), -1);
+        assertEquals(definedThroughCompositeFunction.indexOfY(8.), 0);
+        assertEquals(definedThroughCompositeFunction.indexOfY(-1.), -1);
+        assertEquals(definedThroughCompositeFunction.leftBound(), 4., 1E-12);
+        assertEquals(definedThroughCompositeFunction.rightBound(), 8., 1E-12);
+        assertEquals(definedThroughCompositeFunction.getCount(), 5);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(definedThroughCompositeFunction.getX(i), i + 4., 1E-12);
+        }
+        for (int i = 0; i < 5; i++) {
+            assertEquals(definedThroughCompositeFunction.getY(i), Math.pow(i + 4, 3. / 2), 1E-12);
+        }
+        definedThroughCompositeFunction.setY(4, 1000.);
+        assertEquals(definedThroughCompositeFunction.getY(4), 1000., 1E-12);
+    }
 }
