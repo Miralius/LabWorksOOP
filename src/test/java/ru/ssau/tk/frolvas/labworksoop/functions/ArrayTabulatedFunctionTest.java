@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
+    private final double DOUBLE_EPSILON = 1E-12;
     double[] valuesX = new double[]{-3., -2., -1, -0., 1., 2., 3., 4., 5.};
     double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
     MathFunction sqrFunc = new SqrFunction();
@@ -30,23 +31,23 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void testExtrapolateLeft() {
-        assertEquals(definedThroughArrays.extrapolateLeft(-5.), 19., 1E-12);
-        assertEquals(definedThroughMathFunction.extrapolateLeft(-1.), -0.0200200200200200200, 1E-12);
-        assertEquals(unitArray.extrapolateLeft(5.), 5., 1E-12);
+        assertEquals(definedThroughArrays.extrapolateLeft(-5.), 19., DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.extrapolateLeft(-1.), -0.0200200200200200200, DOUBLE_EPSILON);
+        assertEquals(unitArray.extrapolateLeft(5.), 5., DOUBLE_EPSILON);
     }
 
     @Test
     public void testExtrapolateRight() {
-        assertEquals(definedThroughArrays.extrapolateRight(6.), 34., 1E-12);
-        assertEquals(definedThroughMathFunction.extrapolateRight(20.), 400., 1E-12);
-        assertEquals(unitArray.extrapolateRight(11.), 11., 1E-12);
+        assertEquals(definedThroughArrays.extrapolateRight(6.), 34., DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.extrapolateRight(20.), 400., DOUBLE_EPSILON);
+        assertEquals(unitArray.extrapolateRight(11.), 11., DOUBLE_EPSILON);
     }
 
     @Test
     public void testInterpolate() {
-        assertEquals(definedThroughArrays.interpolate(0.5, definedThroughArrays.floorIndexOfX(0.5)), 0.5, 1E-12);
-        assertEquals(definedThroughMathFunction.interpolate(0.041, definedThroughMathFunction.floorIndexOfX(0.041)), 0.0016992968944920899, 1E-12);
-        assertEquals(unitArray.interpolate(10., unitArray.floorIndexOfX(10.)), 10., 1E-12);
+        assertEquals(definedThroughArrays.interpolate(0.5, definedThroughArrays.floorIndexOfX(0.5)), 0.5, DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.interpolate(0.041, definedThroughMathFunction.floorIndexOfX(0.041)), 0.0016992968944920899, DOUBLE_EPSILON);
+        assertEquals(unitArray.interpolate(10., unitArray.floorIndexOfX(10.)), 10., DOUBLE_EPSILON);
     }
 
     @Test
@@ -71,16 +72,16 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void testLeftBound() {
-        assertEquals(definedThroughArrays.leftBound(), -3., 1E-12);
-        assertEquals(definedThroughMathFunction.leftBound(), 0., 1E-12);
-        assertEquals(unitArray.leftBound(), 10., 1E-12);
+        assertEquals(definedThroughArrays.leftBound(), -3., DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.leftBound(), 0., DOUBLE_EPSILON);
+        assertEquals(unitArray.leftBound(), 10., DOUBLE_EPSILON);
     }
 
     @Test
     public void testRightBound() {
-        assertEquals(definedThroughArrays.rightBound(), 5., 1E-12);
-        assertEquals(definedThroughMathFunction.rightBound(), 20., 1E-12);
-        assertEquals(unitArray.rightBound(), 10., 1E-12);
+        assertEquals(definedThroughArrays.rightBound(), 5., DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.rightBound(), 20., DOUBLE_EPSILON);
+        assertEquals(unitArray.rightBound(), 10., DOUBLE_EPSILON);
     }
 
     @Test
@@ -93,23 +94,23 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testGetX() {
         for (int i = 0; i < 9; i++) {
-            assertEquals(definedThroughArrays.getX(i), i - 3., 1E-12);
+            assertEquals(definedThroughArrays.getX(i), i - 3., DOUBLE_EPSILON);
         }
         for (int i = 0; i < 1000; i++) {
-            assertEquals(definedThroughMathFunction.getX(i), i * 20. / 999, 1E-12);
+            assertEquals(definedThroughMathFunction.getX(i), i * 20. / 999, DOUBLE_EPSILON);
         }
-        assertEquals(unitArray.getX(0), 10., 1E-12);
+        assertEquals(unitArray.getX(0), 10., DOUBLE_EPSILON);
     }
 
     @Test
     public void testGetY() {
         for (int i = 0; i < 9; i++) {
-            assertEquals(definedThroughArrays.getY(i), Math.pow(i - 3., 2), 1E-12);
+            assertEquals(definedThroughArrays.getY(i), Math.pow(i - 3., 2), DOUBLE_EPSILON);
         }
         for (int i = 0; i < 1000; i++) {
-            assertEquals(definedThroughMathFunction.getY(i), Math.pow(i * 20. / 999, 2), 1E-12);
+            assertEquals(definedThroughMathFunction.getY(i), Math.pow(i * 20. / 999, 2), DOUBLE_EPSILON);
         }
-        assertEquals(unitArray.getY(0), 100., 1E-12);
+        assertEquals(unitArray.getY(0), 100., DOUBLE_EPSILON);
     }
 
     @Test
@@ -117,9 +118,9 @@ public class ArrayTabulatedFunctionTest {
         definedThroughArrays.setY(5, 100500.);
         definedThroughMathFunction.setY(0, 1009.);
         unitArray.setY(0, 9.);
-        assertEquals(definedThroughArrays.getY(5), 100500., 1E-12);
-        assertEquals(definedThroughMathFunction.getY(0), 1009., 1E-12);
-        assertEquals(unitArray.getY(0), 9., 1E-12);
+        assertEquals(definedThroughArrays.getY(5), 100500., DOUBLE_EPSILON);
+        assertEquals(definedThroughMathFunction.getY(0), 1009., DOUBLE_EPSILON);
+        assertEquals(unitArray.getY(0), 9., DOUBLE_EPSILON);
     }
 
     //Additional test for composite function
@@ -134,24 +135,24 @@ public class ArrayTabulatedFunctionTest {
         for (int i = 5; i < 9; i++) {
             assertEquals(definedThroughCompositeFunction.floorIndexOfX(i - 0.5), i - 5);
         }
-        assertEquals(definedThroughCompositeFunction.extrapolateLeft(3), 4.819660112502, 1E-12);
-        assertEquals(definedThroughCompositeFunction.extrapolateRight(9), 26.734574818486, 1E-12);
-        assertEquals(definedThroughCompositeFunction.interpolate(5.5, definedThroughCompositeFunction.floorIndexOfX(5.5)), 12.938639172099, 1E-12);
+        assertEquals(definedThroughCompositeFunction.extrapolateLeft(3), 4.819660112502, DOUBLE_EPSILON);
+        assertEquals(definedThroughCompositeFunction.extrapolateRight(9), 26.734574818486, DOUBLE_EPSILON);
+        assertEquals(definedThroughCompositeFunction.interpolate(5.5, definedThroughCompositeFunction.floorIndexOfX(5.5)), 12.938639172099, DOUBLE_EPSILON);
         assertEquals(definedThroughCompositeFunction.indexOfX(4.), 0);
         assertEquals(definedThroughCompositeFunction.indexOfX(1.), -1);
         assertEquals(definedThroughCompositeFunction.indexOfY(8.), 0);
         assertEquals(definedThroughCompositeFunction.indexOfY(-1.), -1);
-        assertEquals(definedThroughCompositeFunction.leftBound(), 4., 1E-12);
-        assertEquals(definedThroughCompositeFunction.rightBound(), 8., 1E-12);
+        assertEquals(definedThroughCompositeFunction.leftBound(), 4., DOUBLE_EPSILON);
+        assertEquals(definedThroughCompositeFunction.rightBound(), 8., DOUBLE_EPSILON);
         assertEquals(definedThroughCompositeFunction.getCount(), 5);
         for (int i = 0; i < 5; i++) {
-            assertEquals(definedThroughCompositeFunction.getX(i), i + 4., 1E-12);
+            assertEquals(definedThroughCompositeFunction.getX(i), i + 4., DOUBLE_EPSILON);
         }
         for (int i = 0; i < 5; i++) {
-            assertEquals(definedThroughCompositeFunction.getY(i), Math.pow(i + 4, 3. / 2), 1E-12);
+            assertEquals(definedThroughCompositeFunction.getY(i), Math.pow(i + 4, 3. / 2), DOUBLE_EPSILON);
         }
         definedThroughCompositeFunction.setY(4, 1000.);
-        assertEquals(definedThroughCompositeFunction.getY(4), 1000., 1E-12);
+        assertEquals(definedThroughCompositeFunction.getY(4), 1000., DOUBLE_EPSILON);
     }
 
     @Test
@@ -160,11 +161,11 @@ public class ArrayTabulatedFunctionTest {
         double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
         ArrayTabulatedFunction testRemoveArray = new ArrayTabulatedFunction(valuesX, valuesY);
         testRemoveArray.remove(0);
-        assertEquals(testRemoveArray.leftBound(), -2., 1E-12);
+        assertEquals(testRemoveArray.leftBound(), -2., DOUBLE_EPSILON);
         testRemoveArray.remove(5);
-        assertEquals(testRemoveArray.getX(5), 4., 1E-12);
+        assertEquals(testRemoveArray.getX(5), 4., DOUBLE_EPSILON);
         testRemoveArray.remove(6);
-        assertEquals(testRemoveArray.rightBound(), 4., 1E-12);
+        assertEquals(testRemoveArray.rightBound(), 4., DOUBLE_EPSILON);
     }
 
     @Test

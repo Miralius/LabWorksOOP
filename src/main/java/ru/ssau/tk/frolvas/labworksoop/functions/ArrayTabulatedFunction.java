@@ -7,6 +7,7 @@ import static java.lang.Math.abs;
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private double[] xValues, yValues;
     private int count;
+    private final double DOUBLE_EPSILON = 1E-12;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         count = xValues.length;
@@ -23,7 +24,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         xValues = new double[count];
         yValues = new double[count];
-        if (abs(xFinish - xStart) < 1E-12) {
+        if (abs(xFinish - xStart) < DOUBLE_EPSILON) {
             double yValue = source.apply(xStart);
             for (int i = 0; i < count; i++) {
                 xValues[i] = xStart;
@@ -70,7 +71,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public int indexOfX(double x) {
         for (int i = 0; i < count; i++) {
-            if (abs(xValues[i] - x) < 1E-12) return i;
+            if (abs(xValues[i] - x) < DOUBLE_EPSILON) return i;
         }
         return -1;
     }
@@ -78,7 +79,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public int indexOfY(double y) {
         for (int i = 0; i < count; i++) {
-            if (abs(yValues[i] - y) < 1E-12) return i;
+            if (abs(yValues[i] - y) < DOUBLE_EPSILON) return i;
         }
         return -1;
     }
