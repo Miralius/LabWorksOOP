@@ -161,10 +161,24 @@ public class ArrayTabulatedFunctionTest {
         double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
         ArrayTabulatedFunction testRemoveArray = new ArrayTabulatedFunction(valuesX, valuesY);
         testRemoveArray.remove(0);
-        assertEquals(testRemoveArray.leftBound(), -2., DOUBLE_EPSILON);
-        testRemoveArray.remove(5);
-        assertEquals(testRemoveArray.getX(5), 4., DOUBLE_EPSILON);
-        testRemoveArray.remove(6);
-        assertEquals(testRemoveArray.rightBound(), 4., DOUBLE_EPSILON);
+        for (int i = -2; i < 6; i++) {
+            assertEquals(testRemoveArray.getX(i + 2), i, DOUBLE_EPSILON);
+            assertEquals(testRemoveArray.getY(i + 2), i * i, DOUBLE_EPSILON);
+        }
+        testRemoveArray.remove(7);
+        for (int i = -2; i < 5; i++) {
+            assertEquals(testRemoveArray.getX(i + 2), i, DOUBLE_EPSILON);
+            assertEquals(testRemoveArray.getY(i + 2), i * i, DOUBLE_EPSILON);
+        }
+        testRemoveArray.remove(3);
+        for (int i = -2; i < 1; i++) {
+            assertEquals(testRemoveArray.getX(i + 2), i, DOUBLE_EPSILON);
+            assertEquals(testRemoveArray.getY(i + 2), i * i, DOUBLE_EPSILON);
+        }
+        for (int i = 2; i < 5; i++) {
+            assertEquals(testRemoveArray.getX(i + 1), i, DOUBLE_EPSILON);
+            assertEquals(testRemoveArray.getY(i + 1), i * i, DOUBLE_EPSILON);
+        }
     }
+
 }

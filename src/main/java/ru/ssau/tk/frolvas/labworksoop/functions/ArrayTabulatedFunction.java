@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import static java.lang.Math.abs;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements  Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable {
     private double[] xValues, yValues;
     private int count;
     private final double DOUBLE_EPSILON = 1E-12;

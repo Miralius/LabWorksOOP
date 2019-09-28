@@ -1,6 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertEquals;
 
 
@@ -66,7 +67,6 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(secondList.getX(i), i, ACCURACY);
         }
         assertEquals(thirdList.getX(0), 5, ACCURACY);
-
     }
 
     @Test
