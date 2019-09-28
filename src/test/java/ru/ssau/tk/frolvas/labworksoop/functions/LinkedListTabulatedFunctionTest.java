@@ -50,7 +50,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testRightBound() {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        assertEquals(secondList.rightBound(), 11, ACCURACY);
+        assertEquals(secondList.rightBound(), 10, ACCURACY);
         assertEquals(firstList.rightBound(), 9, ACCURACY);
     }
 

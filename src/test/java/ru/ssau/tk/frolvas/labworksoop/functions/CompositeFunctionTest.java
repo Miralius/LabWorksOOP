@@ -21,8 +21,8 @@ public class CompositeFunctionTest {
         final double[] yValues = new double[]{8, 9, 10, 11, 12, 13, 14};
         MathFunction list = new LinkedListTabulatedFunction(xValues, yValues);
         assertEquals(funcF.apply(5), Math.sqrt(125), ACCURACY);
-        assertEquals(list.andThen(sqrt).andThen(cube).apply(3), 5.196, ACCURACY);
-        assertEquals(list.andThen(cube).apply(20), 19683, ACCURACY);
+        assertEquals(list.andThen(sqrt).andThen(cube).apply(3), 12.196, ACCURACY);
+        assertEquals(list.andThen(cube).apply(20), 8007, ACCURACY);
     }
 
 
