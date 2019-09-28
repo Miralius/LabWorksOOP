@@ -6,12 +6,40 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
     private Node last;
 
-
     private static class Node {
         Node next;
         Node prev;
         double x;
         double y;
+    }
+
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        this.count = xValues.length;
+        for (int i = 0; i < count; i++) {
+            this.addNode(xValues[i], yValues[i]);
+        }
+    }
+
+    public LinkedListTabulatedFunction(MathFunction sourse, double xFrom, double xTo, int count) {
+        this.count = count;
+        double auxiliaryVariableForChange;
+        if (xFrom > xTo) {
+            auxiliaryVariableForChange = xFrom;
+            xFrom = xTo;
+            xTo = auxiliaryVariableForChange;
+        }
+        double step = (xTo - xFrom) / (count - 1);
+        double auxiliaryVariable = xFrom;
+        if (xFrom != xTo) {
+            for (int i = 0; i < count; i++) {
+                this.addNode(auxiliaryVariable, sourse.apply(auxiliaryVariable));
+                auxiliaryVariable += step;
+            }
+        } else {
+            for (int i = 0; i < count; i++) {
+                this.addNode(xFrom, sourse.apply(xFrom));
+            }
+        }
     }
 
     void addNode(double x, double y) {
@@ -32,35 +60,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             newNode.y = y;
             last = newNode;
 
-        }
-    }
-
-    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
-        this.count = xValues.length;
-        for (int i = 0; i < count; i++) {
-            this.addNode(xValues[i], yValues[i]);
-        }
-    }
-
-    LinkedListTabulatedFunction(MathFunction sourse, double xFrom, double xTo, int count) {
-        this.count = count;
-        double auxiliaryVariableForChange;
-        if (xFrom > xTo) {
-            auxiliaryVariableForChange = xFrom;
-            xFrom = xTo;
-            xTo = auxiliaryVariableForChange;
-        }
-        double step = (xTo - xFrom) / (count - 1);
-        double auxiliaryVariable = xFrom;
-        if (xFrom != xTo) {
-            for (int i = 0; i <= count; i++) {
-                this.addNode(auxiliaryVariable, sourse.apply(auxiliaryVariable));
-                auxiliaryVariable += step;
-            }
-        } else {
-            for (int i = 0; i < count; i++) {
-                this.addNode(xFrom, sourse.apply(xFrom));
-            }
         }
     }
 
@@ -111,7 +110,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public void setY(int index, double valueY) {
-        valueY = getNode(index).y;
+        getNode(index).y = valueY;
     }
 
     public int indexOfX(double x) {
@@ -140,7 +139,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return -1;
     }
 
-    public int floorIndexOfX(double x) {
+    protected int floorIndexOfX(double x) {
         Node buff;
         if (x < head.x) {
             return 0;
@@ -161,7 +160,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (head.x == last.x) {
             return head.y;
         }
-        return head.y + (head.next.y - head.y) / (head.next.x - head.x) * (x - head.x);
+        return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     @Override
@@ -169,7 +168,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (head.x == last.x) {
             return head.y;
         }
-        return last.prev.y + (last.y - last.prev.y) * (x - last.prev.x) / (last.x - last.prev.x);
+        return interpolate(x, last.prev.x, last.x, last.prev.y, last.y);
     }
 
     @Override
@@ -179,7 +178,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
         Node left = getNode(floorIndex);
         Node right = left.next;
-        return left.y + (right.y - left.y) / (right.x - left.x) * (x - left.x);
+        return interpolate(x, left.x, right.x, left.y, right.y);
     }
 }
 

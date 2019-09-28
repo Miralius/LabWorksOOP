@@ -12,7 +12,7 @@ public class ConstantFunction implements MathFunction {
     public double apply(double x) {
         return number;
     }
-    
+
     public double getNumber() {
         return number;
     }

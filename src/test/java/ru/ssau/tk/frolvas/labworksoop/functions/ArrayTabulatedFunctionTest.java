@@ -167,9 +167,4 @@ public class ArrayTabulatedFunctionTest {
         testRemoveArray.remove(6);
         assertEquals(testRemoveArray.rightBound(), 4., DOUBLE_EPSILON);
     }
-
-    @Test
-    public void testInsert() {
-        definedThroughArrays.insert(5., 7.);
-    }
 }

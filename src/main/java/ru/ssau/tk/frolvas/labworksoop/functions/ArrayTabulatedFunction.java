@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import static java.lang.Math.abs;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements  Removable {
     private double[] xValues, yValues;
     private int count;
     private final double DOUBLE_EPSILON = 1E-12;
@@ -43,9 +43,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) {
-            return 0;
-        }
+        if (x < xValues[0]) return 0;
         for (int i = 1; i < count; i++) {
             if (xValues[i] > x) return i - 1;
         }

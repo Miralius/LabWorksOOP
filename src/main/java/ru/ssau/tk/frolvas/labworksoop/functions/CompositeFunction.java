@@ -10,6 +10,6 @@ public class CompositeFunction implements MathFunction {
     }
 
     public double apply(double x) {
-        return functionH.apply(functionG.apply(x));
+        return functionG.apply(functionH.apply(x));
     }
 }
