@@ -5,15 +5,17 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class CompositeFunctionTest {
-    final private double ACCURACY = 0.1;
 
     @Test
     public void test() {
         final double ACCURACY = 0.1;
+
+        MathFunction functionH = new IdentityFunction();
+        MathFunction functionG = new Cube();
+        MathFunction functionF = new CompositeFunction(functionH, functionG);
+        assertEquals(functionF.apply(2), 8, ACCURACY);
         MathFunction cube = new Cube();
         MathFunction sqrt = new SqrtFunction();
-        MathFunction sqr = new SqrFunction();
-        MathFunction zero = new ZeroFunction();
         MathFunction funcF = new CompositeFunction(cube, sqrt);
         final double[] xValues = new double[]{1, 2, 3, 4, 5, 6, 7};
         final double[] yValues = new double[]{8, 9, 10, 11, 12, 13, 14};
