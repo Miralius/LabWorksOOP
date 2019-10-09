@@ -6,7 +6,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
     private Node last;
 
-    private static class Node {
+   private static class Node {
         Node next;
         Node prev;
         double x;
@@ -155,6 +155,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return getCount();
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     protected double extrapolateLeft(double x) {
         if (head.x == last.x) {
@@ -163,6 +164,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     protected double extrapolateRight(double x) {
         if (head.x == last.x) {
