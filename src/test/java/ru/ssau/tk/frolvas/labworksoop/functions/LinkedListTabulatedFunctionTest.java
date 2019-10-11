@@ -1,5 +1,6 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -67,6 +68,13 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(secondList.getX(i), i, ACCURACY);
         }
         assertEquals(thirdList.getX(0), 5, ACCURACY);
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            firstList.getX(-1);
+        });
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            secondList.getX(300);
+        });
+
     }
 
     @Test
@@ -75,6 +83,12 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.getY(0), 2, ACCURACY);
         assertEquals(secondList.getY(0), 0, ACCURACY);
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            firstList.getY(-5);
+        });
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            secondList.getY(122);
+        });
     }
 
     @Test
@@ -82,6 +96,9 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         firstList.setY(4, 10);
         assertEquals(firstList.getY(4), 10, ACCURACY);
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            firstList.setY(-1,13);
+        });
     }
 
     @Test
@@ -106,8 +123,10 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.floorIndexOfX(3.5), 1);
-        assertEquals(secondList.floorIndexOfX(-10), 0);
         assertEquals(secondList.floorIndexOfX(7.5), 7);
+        Assert.assertThrows(IllegalArgumentException.class, () -> {
+            firstList.floorIndexOfX(0);
+        });
     }
 
     @Test
@@ -120,10 +139,8 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testExtrapolateRight() {
-        LinkedListTabulatedFunction thirdList = listWithOneElement();
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        assertEquals(thirdList.extrapolateRight(5.1), 125, ACCURACY);
         assertEquals(firstList.extrapolateRight(8), 9, ACCURACY);
         assertEquals(secondList.extrapolateRight(10.2), 1054.2, ACCURACY);
     }
