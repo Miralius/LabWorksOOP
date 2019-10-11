@@ -6,7 +6,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
     private Node last;
 
-   private static class Node {
+    private static class Node {
         Node next;
         Node prev;
         double x;
@@ -14,6 +14,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         this.count = xValues.length;
         for (int i = 0; i < count; i++) {
             this.addNode(xValues[i], yValues[i]);
@@ -21,6 +24,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(MathFunction sourse, double xFrom, double xTo, int count) {
+        if (count < 2) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         this.count = count;
         double auxiliaryVariableForChange;
         if (xFrom > xTo) {
@@ -76,6 +82,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     private Node getNode(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
+
         Node first;
         if (index > (count / 2)) {
             first = last;
@@ -102,14 +112,23 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public double getX(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         return getNode(index).x;
     }
 
     public double getY(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         return getNode(index).y;
     }
 
     public void setY(int index, double valueY) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         getNode(index).y = valueY;
     }
 
@@ -142,7 +161,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected int floorIndexOfX(double x) {
         Node buff;
         if (x < head.x) {
-            return 0;
+            throw new IllegalArgumentException("X less then head");
         }
         buff = head;
         for (int i = 0; i < count; i++) {
@@ -164,7 +183,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
-    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     protected double extrapolateRight(double x) {
         if (head.x == last.x) {

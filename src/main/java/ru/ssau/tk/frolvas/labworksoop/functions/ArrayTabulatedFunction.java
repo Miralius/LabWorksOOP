@@ -10,12 +10,18 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     private final double DOUBLE_EPSILON = 1E-12;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
         this.yValues = Arrays.copyOf(yValues, count);
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (xValues.length < 2) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         this.count = count;
         double xStart = xFrom, xFinish = xTo;
         if (xTo < xFrom) {
@@ -43,7 +49,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) return 0;
+        if (x < xValues[0]) {
+            throw new IllegalArgumentException("X less than the left border");
+        }
         for (int i = 1; i < count; i++) {
             if (xValues[i] > x) return i - 1;
         }
@@ -52,19 +60,16 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) return x;
         return interpolate(x, xValues[0], xValues[1], yValues[0], yValues[1]);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) return x;
         return interpolate(x, xValues[count - 2], xValues[count - 1], yValues[count - 2], yValues[count - 1]);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) return x;
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
@@ -122,16 +127,25 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double getX(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         return yValues[index];
     }
 
     @Override
     public void setY(int index, double value) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
         yValues[index] = value;
     }
 
