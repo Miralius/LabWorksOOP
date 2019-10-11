@@ -6,12 +6,12 @@ import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
     private final double DOUBLE_EPSILON = 1E-12;
-    double[] valuesX = new double[]{-3., -2., -1, -0., 1., 2., 3., 4., 5.};
-    double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
-    MathFunction sqrFunc = new SqrFunction();
-    ArrayTabulatedFunction definedThroughArrays = new ArrayTabulatedFunction(valuesX, valuesY);
-    ArrayTabulatedFunction definedThroughMathFunction = new ArrayTabulatedFunction(sqrFunc, 20, 0, 1000);
-    ArrayTabulatedFunction unitArray = new ArrayTabulatedFunction(sqrFunc, 10, 10, 1);
+    private double[] valuesX = new double[]{-3., -2., -1, -0., 1., 2., 3., 4., 5.};
+    private double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
+    private MathFunction sqrFunc = new SqrFunction();
+    private ArrayTabulatedFunction definedThroughArrays = new ArrayTabulatedFunction(valuesX, valuesY);
+    private ArrayTabulatedFunction definedThroughMathFunction = new ArrayTabulatedFunction(sqrFunc, 20, 0, 1000);
+    private ArrayTabulatedFunction unitArray = new ArrayTabulatedFunction(sqrFunc, 10, 10, 1);
 
     @Test
     public void testFloorIndexOfX() {
