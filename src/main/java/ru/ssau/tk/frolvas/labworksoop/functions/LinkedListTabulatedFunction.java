@@ -185,9 +185,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         Node right = left.next;
         return interpolate(x, left.x, right.x, left.y, right.y);
     }
+
     private void checkIncludeInBounds(int index) {
         if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
+            throw new ArrayIndexOutOfBoundsException("Ivalid index");
         }
     }
 

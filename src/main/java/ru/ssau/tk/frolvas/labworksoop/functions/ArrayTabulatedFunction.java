@@ -145,7 +145,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     private void checkIncludeInBounds(int index) {
         if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
+            throw new ArrayIndexOutOfBoundsException("Ivalid index");
         }
     }
 
