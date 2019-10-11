@@ -1,7 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import java.util.Arrays;
-
+import java.util.Iterator;
 import static java.lang.Math.abs;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable {
@@ -147,6 +147,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (index < 0 || index >= count) {
             throw new ArrayIndexOutOfBoundsException("Ivalid index");
         }
+    }
+    @Override
+    public Iterator iterator() {
+        throw new UnsupportedOperationException();
     }
 
 }

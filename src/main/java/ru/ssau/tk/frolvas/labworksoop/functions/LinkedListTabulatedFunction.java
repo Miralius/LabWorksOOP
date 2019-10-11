@@ -1,5 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import java.util.Iterator;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private int count;
@@ -190,6 +192,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (index < 0 || index >= count) {
             throw new ArrayIndexOutOfBoundsException("Ivalid index");
         }
+    }
+
+    @Override
+    public Iterator iterator() {
+        throw new UnsupportedOperationException();
     }
 
 }
