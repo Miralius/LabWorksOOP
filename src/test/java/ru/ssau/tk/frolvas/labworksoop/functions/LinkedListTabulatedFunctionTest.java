@@ -68,13 +68,6 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(secondList.getX(i), i, ACCURACY);
         }
         assertEquals(thirdList.getX(0), 5, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.getX(-1);
-        });
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            secondList.getX(300);
-        });
-
     }
 
     @Test
@@ -83,12 +76,6 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.getY(0), 2, ACCURACY);
         assertEquals(secondList.getY(0), 0, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.getY(-5);
-        });
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            secondList.getY(122);
-        });
     }
 
     @Test
@@ -96,9 +83,6 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         firstList.setY(4, 10);
         assertEquals(firstList.getY(4), 10, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.setY(-1,13);
-        });
     }
 
     @Test
@@ -124,9 +108,6 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.floorIndexOfX(3.5), 1);
         assertEquals(secondList.floorIndexOfX(7.5), 7);
-        Assert.assertThrows(IllegalArgumentException.class, () -> {
-            firstList.floorIndexOfX(0);
-        });
     }
 
     @Test
