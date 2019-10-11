@@ -127,26 +127,26 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double getX(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
+        checkIncludeInBounds(index);
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
+        checkIncludeInBounds(index);
         return yValues[index];
     }
 
     @Override
     public void setY(int index, double value) {
+        checkIncludeInBounds(index);
+        yValues[index] = value;
+    }
+
+    private void checkIncludeInBounds(int index) {
         if (index < 0 || index >= count) {
             throw new ArrayIndexOutOfBoundsException("ivalid index");
         }
-        yValues[index] = value;
     }
 
 }

@@ -112,23 +112,17 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public double getX(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
+        checkIncludeInBounds(index);
         return getNode(index).x;
     }
 
     public double getY(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
+        checkIncludeInBounds(index);
         return getNode(index).y;
     }
 
     public void setY(int index, double valueY) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
+        checkIncludeInBounds(index);
         getNode(index).y = valueY;
     }
 
@@ -177,29 +171,26 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @SuppressWarnings("SuspiciousNameCombination")
     @Override
     protected double extrapolateLeft(double x) {
-        if (head.x == last.x) {
-            return head.y;
-        }
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (head.x == last.x) {
-            return head.y;
-        }
         return interpolate(x, last.prev.x, last.x, last.prev.y, last.y);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (head.x == last.x) {
-            return head.y;
-        }
         Node left = getNode(floorIndex);
         Node right = left.next;
         return interpolate(x, left.x, right.x, left.y, right.y);
     }
+    private void checkIncludeInBounds(int index) {
+        if (index < 0 || index >= count) {
+            throw new ArrayIndexOutOfBoundsException("ivalid index");
+        }
+    }
+
 }
 
 
