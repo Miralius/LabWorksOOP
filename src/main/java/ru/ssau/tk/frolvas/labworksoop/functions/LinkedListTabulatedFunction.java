@@ -195,7 +195,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Point> iterator() {
         throw new UnsupportedOperationException();
     }
 
