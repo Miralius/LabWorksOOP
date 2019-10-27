@@ -1,6 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
@@ -196,7 +197,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        Iterator<Point> iterator = new Iterator<>() {
+            private Node node = head;
+
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                } else {
+                    Point point = new Point(node.x, node.y);
+                    if (node != head.prev) {
+                        node = node.next;
+                    } else {
+                        node = null;
+                    }
+                    return point;
+                }
+            }
+        };
+        return iterator;
     }
 
 }

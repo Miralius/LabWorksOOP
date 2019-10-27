@@ -1,6 +1,5 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
-import java.awt.*;
 
 public interface TabulatedFunction extends MathFunction, Iterable<Point> {
     int getCount();

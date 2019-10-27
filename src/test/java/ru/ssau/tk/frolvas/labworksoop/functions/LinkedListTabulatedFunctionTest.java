@@ -2,6 +2,9 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
+
+import java.util.Iterator;
 
 import static org.testng.Assert.assertEquals;
 
@@ -96,7 +99,7 @@ public class LinkedListTabulatedFunctionTest {
         firstList.setY(4, 10);
         assertEquals(firstList.getY(4), 10, ACCURACY);
         Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.setY(-2,13);
+            firstList.setY(-2, 13);
         });
     }
 
@@ -152,4 +155,24 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(secondList.interpolate(7.5, 3), 193.5);
     }
 
+    @Test
+    void iteratorTestFirst() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        Iterator<Point> iterator = firstList.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(firstList.getX(i), point.x, 0.0001);
+            i++;
+        }
+    }
+    /*void iteratorTestSecond() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        Iterator<Point> iterator = firstList.iterator();
+        for (Point point : TabulatedFunction) {
+
+        }
+    }
+*/
 }
+
