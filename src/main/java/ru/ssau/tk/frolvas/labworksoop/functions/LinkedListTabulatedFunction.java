@@ -195,7 +195,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
-    @Override
     public Iterator<Point> iterator() {
         Iterator<Point> iterator = new Iterator<>() {
             private Node node = head;
