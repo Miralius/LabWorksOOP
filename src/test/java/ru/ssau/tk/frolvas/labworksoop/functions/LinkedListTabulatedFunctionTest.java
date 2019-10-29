@@ -165,10 +165,19 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(firstList.getX(i), points.x, 0.0001);
             i++;
         }
-        for (Point points : firstList){
+
+    }
+
+    @Test
+    void iteratorTestSecond() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        Iterator<Point> iterator = firstList.iterator();
+        int i = 0;
+        for (Point points : firstList) {
             assertEquals(firstList.getX(i++), points.x, 0.0001);
         }
     }
+
 
 }
 
