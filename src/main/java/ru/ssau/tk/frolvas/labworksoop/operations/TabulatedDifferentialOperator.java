@@ -4,11 +4,9 @@ package ru.ssau.tk.frolvas.labworksoop.operations;
 import ru.ssau.tk.frolvas.labworksoop.functions.*;
 import ru.ssau.tk.frolvas.labworksoop.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.frolvas.labworksoop.functions.factory.TabulatedFunctionFactory;
-import ru.ssau.tk.frolvas.labworksoop.operations.TabulatedFunctionOperatorService;
 
 public class TabulatedDifferentialOperator implements DifferentialOperator<TabulatedFunction> {
     TabulatedFunctionFactory factory;
-
 
     public TabulatedDifferentialOperator(TabulatedFunctionFactory factory) {
         this.factory = factory;
@@ -28,7 +26,7 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
-        Point[] points = TabulatedFunctionOperatorService.asPoints(function);
+        Point[] points = TabulatedFunctionOperationService.asPoints(function);
         double[] xValues = new double[points.length];
         double[] yValues = new double[points.length];
         for (int i = 0; i < points.length; i++) {
@@ -44,6 +42,5 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     public double apply(double x) {
         return 0;
     }
-
 
 }
