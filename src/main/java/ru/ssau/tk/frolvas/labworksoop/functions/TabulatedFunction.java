@@ -1,7 +1,6 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
-
-public interface TabulatedFunction extends MathFunction, Iterable<Point> {
+public interface TabulatedFunction extends MathFunction {
     int getCount();
 
     double getX(int index);

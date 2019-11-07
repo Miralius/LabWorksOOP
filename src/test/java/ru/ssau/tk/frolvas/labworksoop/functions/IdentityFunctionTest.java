@@ -10,6 +10,4 @@ public class IdentityFunctionTest {
         IdentityFunction firstFunction = new IdentityFunction();
         assertEquals(firstFunction.apply(5), 5, 0.00001);
     }
-
-
 }

@@ -5,12 +5,18 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class AbstractTabulatedFunctionTest {
-    double[] xValues={0,0.5,1};
-    double[] yValues={0,0.25,1};
-    LinkedListTabulatedFunction link=new LinkedListTabulatedFunction(xValues,yValues);
-    String sLink="LinkedListTabulatedFunction size = 3\n[0.0; 0.0]\n[0.5; 0.25]\n[1.0; 1.0]";
+    MockTabulatedFunction mockObj = new MockTabulatedFunction();
+
     @Test
-    public void testTestToString() {
-        assertEquals(sLink,link.toString());
+    public void testInterpolate() {
+        assertEquals(mockObj.interpolate(2, 1, 3, 5, 7), 6, 0.0001);
+    }
+
+    @Test
+    public void testApply() {
+        assertEquals(mockObj.apply(7), 11, 0.0001);
+        assertEquals(mockObj.apply(-7), -3, 0.0001);
+        assertEquals(mockObj.apply(2), 1, 0.0001);
+        assertEquals(mockObj.apply(1), 5, 0.0001);
     }
 }

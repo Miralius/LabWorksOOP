@@ -1,7 +1,6 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 import static java.lang.Math.abs;
 
@@ -12,7 +11,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2) {
-            throw new IllegalArgumentException("Count of points less then 2");
+            throw new IllegalArgumentException("Size of array is less than minimum (2)");
         }
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
@@ -20,8 +19,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if (xValues.length < 2) {
-            throw new IllegalArgumentException("Count of points less then 2");
+        if (count < 2) {
+            throw new IllegalArgumentException("Number of values is less than minimum (2)");
         }
         this.count = count;
         double xStart = xFrom, xFinish = xTo;
@@ -31,30 +30,22 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         xValues = new double[count];
         yValues = new double[count];
-        if (abs(xFinish - xStart) < DOUBLE_EPSILON) {
-            double yValue = source.apply(xStart);
-            for (int i = 0; i < count; i++) {
-                xValues[i] = xStart;
-                yValues[i] = yValue;
-            }
-        } else {
-            double samplingStep = (xFinish - xStart) / (count - 1);
-            double xValue = xStart;
-            for (int i = 0; i < count; i++) {
-                xValues[i] = xValue;
-                yValues[i] = source.apply(xValue);
-                xValue += samplingStep;
-            }
+        double samplingStep = (xFinish - xStart) / (count - 1);
+        double xValue = xStart;
+        for (int i = 0; i < count; i++) {
+            xValues[i] = xValue;
+            yValues[i] = source.apply(xValue);
+            xValue += samplingStep;
         }
     }
 
     @Override
     protected int floorIndexOfX(double x) {
         if (x < xValues[0]) {
-            throw new IllegalArgumentException("X less than the left border");
+            throw new IllegalArgumentException("X is less than the left border of tabulated function");
         }
         for (int i = 1; i < count; i++) {
-            if (xValues[i] > x) return i - 1;
+            if (xValues[i] > x) return (i - 1);
         }
         return count;
     }
@@ -101,7 +92,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public void remove(int index) {
+    public void remove(int index) throws ArrayIndexOutOfBoundsException {
         count--;
         double[] xTempValues = new double[count];
         double[] yTempValues = new double[count];
@@ -127,32 +118,18 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public double getX(int index) {
-        checkIncludeInBounds(index);
+    public double getX(int index) throws ArrayIndexOutOfBoundsException {
         return xValues[index];
     }
 
     @Override
-    public double getY(int index) {
-        checkIncludeInBounds(index);
+    public double getY(int index) throws ArrayIndexOutOfBoundsException {
         return yValues[index];
     }
 
     @Override
-    public void setY(int index, double value) {
-        checkIncludeInBounds(index);
+    public void setY(int index, double value) throws ArrayIndexOutOfBoundsException {
         yValues[index] = value;
-    }
-
-    private void checkIncludeInBounds(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("Ivalid index");
-        }
-    }
-
-    @Override
-    public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
     }
 
 }

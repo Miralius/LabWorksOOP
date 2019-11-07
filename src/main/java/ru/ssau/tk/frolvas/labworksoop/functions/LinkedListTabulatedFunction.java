@@ -1,13 +1,9 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private int count;
     private Node head;
-    private Node last;
 
     private static class Node {
         Node next;
@@ -18,7 +14,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2) {
-            throw new IllegalArgumentException("Count of points less then 2");
+            throw new IllegalArgumentException("Size of array is less than minimum (2)");
         }
         this.count = xValues.length;
         for (int i = 0; i < count; i++) {
@@ -26,9 +22,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
-    public LinkedListTabulatedFunction(MathFunction sourse, double xFrom, double xTo, int count) {
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (count < 2) {
-            throw new IllegalArgumentException("Count of points less then 2");
+            throw new IllegalArgumentException("Number of values is less than minimum (2)");
         }
         this.count = count;
         double auxiliaryVariableForChange;
@@ -39,15 +35,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
         double step = (xTo - xFrom) / (count - 1);
         double auxiliaryVariable = xFrom;
-        if (xFrom != xTo) {
-            for (int i = 0; i < count; i++) {
-                this.addNode(auxiliaryVariable, sourse.apply(auxiliaryVariable));
-                auxiliaryVariable += step;
-            }
-        } else {
-            for (int i = 0; i < count; i++) {
-                this.addNode(xFrom, sourse.apply(xFrom));
-            }
+        for (int i = 0; i < count; i++) {
+            this.addNode(auxiliaryVariable, source.apply(auxiliaryVariable));
+            auxiliaryVariable += step;
         }
     }
 
@@ -59,16 +49,13 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             newNode.prev = newNode;
             newNode.x = x;
             newNode.y = y;
-            last = newNode;
         } else {
             newNode.next = head;
-            newNode.prev = last;
-            head.prev = newNode;
-            last.next = newNode;
+            newNode.prev = head.prev;
             newNode.x = x;
             newNode.y = y;
-            last = newNode;
-
+            head.prev.next = newNode;
+            head.prev = newNode;
         }
     }
 
@@ -81,20 +68,17 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public double rightBound() {
-        return last.x;
+        return head.prev.x;
     }
 
-    private Node getNode(int index) {
-        if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("ivalid index");
-        }
-
+    private Node getNode(int index) throws IllegalArgumentException {
+        checkIncludeInBounds(index);
         Node first;
         if (index > (count / 2)) {
-            first = last;
+            first = head.prev;
             for (int i = count - 1; i > 0; i--) {
                 if (i == index) {
-                    return first;
+                    break;
                 } else {
                     first = first.prev;
                 }
@@ -104,27 +88,26 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             first = head;
             for (int i = 0; i < count; i++) {
                 if (i == index) {
-                    return first;
+                    break;
                 } else {
                     first = first.next;
                 }
             }
         }
-        return null;
-
+        return first;
     }
 
-    public double getX(int index) {
+    public double getX(int index) throws IllegalArgumentException {
         checkIncludeInBounds(index);
         return getNode(index).x;
     }
 
-    public double getY(int index) {
+    public double getY(int index) throws IllegalArgumentException {
         checkIncludeInBounds(index);
         return getNode(index).y;
     }
 
-    public void setY(int index, double valueY) {
+    public void setY(int index, double valueY) throws IllegalArgumentException {
         checkIncludeInBounds(index);
         getNode(index).y = valueY;
     }
@@ -155,11 +138,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return -1;
     }
 
-    protected int floorIndexOfX(double x) {
-        Node buff;
+    @Override
+    protected int floorIndexOfX(double x) throws IllegalArgumentException {
         if (x < head.x) {
-            throw new IllegalArgumentException("X less then head");
+            throw new IllegalArgumentException("X is less than minimal value in linked list");
         }
+        Node buff;
         buff = head;
         for (int i = 0; i < count; i++) {
             if (buff.x < x) {
@@ -171,7 +155,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return getCount();
     }
 
-    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     protected double extrapolateLeft(double x) {
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
@@ -179,7 +162,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateRight(double x) {
-        return interpolate(x, last.prev.x, last.x, last.prev.y, last.y);
+        return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
     @Override
@@ -191,38 +174,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private void checkIncludeInBounds(int index) {
         if (index < 0 || index >= count) {
-            throw new ArrayIndexOutOfBoundsException("Ivalid index");
+            throw new IllegalArgumentException("Index is out of array's bounds");
         }
     }
-
-    public Iterator<Point> iterator() {
-        Iterator<Point> iterator = new Iterator<>() {
-            private Node node = head;
-
-            public boolean hasNext() {
-                return node != null;
-            }
-
-            public Point next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                } else {
-                    Point point = new Point(node.x, node.y);
-                    if (node != head.prev) {
-                        node = node.next;
-                    } else {
-                        node = null;
-                    }
-                    return point;
-                }
-            }
-        };
-        return iterator;
-    }
-
 }
-
-
-
-
-

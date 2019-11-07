@@ -1,12 +1,8 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 
-import java.util.Iterator;
-
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 
 public class LinkedListTabulatedFunctionTest {
@@ -24,8 +20,21 @@ public class LinkedListTabulatedFunctionTest {
         return new LinkedListTabulatedFunction(testFunc, 10, 0, count);
     }
 
-    private LinkedListTabulatedFunction listWithOneElement() {
-        return new LinkedListTabulatedFunction(testFunc, 5, 5, 10);
+    @Test
+    public void testExceptions() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            double[] valuesX = new double[]{-3.};
+            double[] valuesY = new double[]{9.};
+            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(valuesX, valuesY);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            MathFunction sqrFunc = new SqrFunction();
+            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(sqrFunc, 1, 1, 1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            LinkedListTabulatedFunction firstList = listOfArray();
+            firstList.floorIndexOfX(-5);
+        });
     }
 
     @Test
@@ -63,20 +72,12 @@ public class LinkedListTabulatedFunctionTest {
     public void testGetX() {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        LinkedListTabulatedFunction thirdList = listWithOneElement();
         for (int i = 0; i < 5; i++) {
             assertEquals(firstList.getX(i), 2 * i + 1, ACCURACY);
         }
         for (int i = 0; i < 11; i++) {
             assertEquals(secondList.getX(i), i, ACCURACY);
         }
-        assertEquals(thirdList.getX(0), 5, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.getX(-1);
-        });
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            secondList.getX(301);
-        });
     }
 
     @Test
@@ -84,13 +85,7 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.getY(0), 2, ACCURACY);
-        assertEquals(secondList.getY(0), 0, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.getY(-5);
-        });
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            secondList.getY(123);
-        });
+        assertEquals(secondList.getY(5), 125, ACCURACY);
     }
 
     @Test
@@ -98,9 +93,6 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         firstList.setY(4, 10);
         assertEquals(firstList.getY(4), 10, ACCURACY);
-        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            firstList.setY(-2, 13);
-        });
     }
 
     @Test
@@ -126,9 +118,7 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.floorIndexOfX(3.5), 1);
         assertEquals(secondList.floorIndexOfX(7.5), 7);
-        Assert.assertThrows(IllegalArgumentException.class, () -> {
-            firstList.floorIndexOfX(0);
-        });
+        assertEquals(secondList.floorIndexOfX(15), 11);
     }
 
     @Test
@@ -154,23 +144,4 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(firstList.interpolate(2.5, 2), 3.5);
         assertEquals(secondList.interpolate(7.5, 3), 193.5);
     }
-
-
-    @Test
-    void iteratorTest() {
-        LinkedListTabulatedFunction firstList = listOfArray();
-        Iterator<Point> iterator = firstList.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            Point points = iterator.next();
-            assertEquals(firstList.getX(i), points.x, 0.0001);
-            i++;
-        }
-        int k = 0;
-        for (Point points : firstList) {
-            assertEquals(firstList.getX(k++), points.x, 0.0001);
-        }
-    }
-
 }
-
