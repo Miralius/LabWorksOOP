@@ -1,5 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private int count;
@@ -16,6 +18,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (xValues.length < 2) {
             throw new IllegalArgumentException("Size of array is less than minimum (2)");
         }
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         this.count = xValues.length;
         for (int i = 0; i < count; i++) {
             this.addNode(xValues[i], yValues[i]);
@@ -71,7 +75,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return head.prev.x;
     }
 
-    private Node getNode(int index) throws IllegalArgumentException {
+    private Node getNode(int index) {
         checkIncludeInBounds(index);
         Node first;
         if (index > (count / 2)) {
@@ -97,17 +101,17 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return first;
     }
 
-    public double getX(int index) throws IllegalArgumentException {
+    public double getX(int index) {
         checkIncludeInBounds(index);
         return getNode(index).x;
     }
 
-    public double getY(int index) throws IllegalArgumentException {
+    public double getY(int index) {
         checkIncludeInBounds(index);
         return getNode(index).y;
     }
 
-    public void setY(int index, double valueY) throws IllegalArgumentException {
+    public void setY(int index, double valueY) {
         checkIncludeInBounds(index);
         getNode(index).y = valueY;
     }
@@ -139,7 +143,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
-    protected int floorIndexOfX(double x) throws IllegalArgumentException {
+    protected int floorIndexOfX(double x) {
         if (x < head.x) {
             throw new IllegalArgumentException("X is less than minimal value in linked list");
         }
@@ -169,6 +173,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected double interpolate(double x, int floorIndex) {
         Node left = getNode(floorIndex);
         Node right = left.next;
+        if (x < left.x || right.x < x) {
+            throw new InterpolationException("X is out of bounds of interpolation");
+        }
         return interpolate(x, left.x, right.x, left.y, right.y);
     }
 

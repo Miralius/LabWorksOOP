@@ -1,5 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
+
 import java.util.Arrays;
 
 import static java.lang.Math.abs;
@@ -13,6 +15,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (xValues.length < 2) {
             throw new IllegalArgumentException("Size of array is less than minimum (2)");
         }
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
         this.yValues = Arrays.copyOf(yValues, count);
@@ -62,6 +66,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double interpolate(double x, int floorIndex) {
+        if (x < xValues[floorIndex] || xValues[floorIndex + 1] < x) {
+            throw new InterpolationException("X is out of bounds of interpolation");
+        }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
@@ -92,7 +99,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public void remove(int index) throws ArrayIndexOutOfBoundsException {
+    public void remove(int index) {
         count--;
         double[] xTempValues = new double[count];
         double[] yTempValues = new double[count];
@@ -118,17 +125,17 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public double getX(int index) throws ArrayIndexOutOfBoundsException {
+    public double getX(int index) {
         return xValues[index];
     }
 
     @Override
-    public double getY(int index) throws ArrayIndexOutOfBoundsException {
+    public double getY(int index) {
         return yValues[index];
     }
 
     @Override
-    public void setY(int index, double value) throws ArrayIndexOutOfBoundsException {
+    public void setY(int index, double value) {
         yValues[index] = value;
     }
 

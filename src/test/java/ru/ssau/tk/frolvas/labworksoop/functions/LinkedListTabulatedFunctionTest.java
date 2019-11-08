@@ -1,6 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import org.testng.annotations.Test;
+import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
 import static org.testng.Assert.*;
 
@@ -38,6 +39,10 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> {
             LinkedListTabulatedFunction firstList = listOfArray();
             firstList.getX(-5);
+        });
+        assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction firstList = listOfArray();
+            firstList.interpolate(5.5, 0);
         });
     }
 
@@ -145,7 +150,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testInterpolate() {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        assertEquals(firstList.interpolate(2.5, 2), 3.5);
-        assertEquals(secondList.interpolate(7.5, 3), 193.5);
+        assertEquals(firstList.interpolate(2.5, 0), 3.5);
+        assertEquals(secondList.interpolate(7.5, 7), 427.5);
     }
 }

@@ -1,6 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import org.testng.annotations.Test;
+import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
 import static org.testng.Assert.*;
 
@@ -24,6 +25,12 @@ public class ArrayTabulatedFunctionTest {
             ArrayTabulatedFunction unitArray = new ArrayTabulatedFunction(sqrFunc, 1, 1, 1);
         });
         assertThrows(IllegalArgumentException.class, () -> definedThroughArrays.floorIndexOfX(-5));
+        assertThrows(InterpolationException.class, () -> {
+            double[] valuesX = new double[]{-3., -2., -1, -0., 1., 2., 3., 4., 5.};
+            double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
+            ArrayTabulatedFunction array = new ArrayTabulatedFunction(valuesX, valuesY);
+            array.interpolate(4.5, 0);
+        });
     }
 
     @Test
