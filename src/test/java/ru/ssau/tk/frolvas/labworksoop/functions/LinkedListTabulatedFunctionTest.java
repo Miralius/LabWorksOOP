@@ -35,6 +35,10 @@ public class LinkedListTabulatedFunctionTest {
             LinkedListTabulatedFunction firstList = listOfArray();
             firstList.floorIndexOfX(-5);
         });
+        assertThrows(IllegalArgumentException.class, () -> {
+            LinkedListTabulatedFunction firstList = listOfArray();
+            firstList.getX(-5);
+        });
     }
 
     @Test
