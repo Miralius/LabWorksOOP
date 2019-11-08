@@ -2,6 +2,8 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
+import java.util.Iterator;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private int count;
@@ -183,5 +185,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of array's bounds");
         }
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 }

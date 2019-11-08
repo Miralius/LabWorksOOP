@@ -1,5 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import java.util.Iterator;
+
 public class MockTabulatedFunction extends AbstractTabulatedFunction {
     private final double x0 = 1, x1 = 3, y0 = 5, y1 = 7;
 
@@ -64,4 +66,8 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     }
 
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
+    }
 }

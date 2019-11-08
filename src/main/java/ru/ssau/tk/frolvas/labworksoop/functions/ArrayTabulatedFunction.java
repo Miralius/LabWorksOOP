@@ -3,6 +3,7 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import static java.lang.Math.abs;
 
@@ -117,6 +118,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         this.xValues = xTempValues;
         this.yValues = yTempValues;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
