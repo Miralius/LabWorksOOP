@@ -3,6 +3,9 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 import org.testng.annotations.Test;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
@@ -30,6 +33,12 @@ public class ArrayTabulatedFunctionTest {
             double[] valuesY = new double[]{9., 4., 1., 0., 1., 4., 9., 16., 25.};
             ArrayTabulatedFunction array = new ArrayTabulatedFunction(valuesX, valuesY);
             array.interpolate(4.5, 0);
+        });
+        assertThrows(NoSuchElementException.class, () -> {
+            Iterator<Point> iterator = definedThroughArrays.iterator();
+            for (int i = 0; i <= definedThroughArrays.getCount(); i++) {
+                iterator.next();
+            }
         });
     }
 
@@ -182,4 +191,23 @@ public class ArrayTabulatedFunctionTest {
         }
     }
 
+    @Test
+    void testIteratorThroughWhile() {
+        Iterator<Point> iterator = definedThroughArrays.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(definedThroughArrays.getX(i), point.x, 0.0001);
+            assertEquals(definedThroughArrays.getY(i++), point.y, 0.0001);
+        }
+    }
+
+    @Test
+    void testIteratorThroughForEach() {
+        int i = 0;
+        for (Point point : definedThroughArrays) {
+            assertEquals(definedThroughArrays.getX(i), point.x, 0.0001);
+            assertEquals(definedThroughArrays.getY(i++), point.y, 0.0001);
+        }
+    }
 }

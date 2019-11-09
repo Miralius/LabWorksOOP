@@ -1,9 +1,11 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import org.jetbrains.annotations.NotNull;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static java.lang.Math.abs;
 
@@ -120,9 +122,25 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.yValues = yTempValues;
     }
 
+    @NotNull
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<>() {
+            private int i = 0;
+
+            public boolean hasNext() {
+                return (i < count);
+            }
+
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point(xValues[i], yValues[i]);
+                i++;
+                return point;
+            }
+        };
     }
 
     @Override

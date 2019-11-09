@@ -50,8 +50,8 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(NoSuchElementException.class, () -> {
             double[] valuesX = new double[]{-3., 5};
             double[] valuesY = new double[]{9., 5};
-            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(valuesX, valuesY);
-            Iterator<Point> iterator = unitLinkedList.iterator();
+            LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(valuesX, valuesY);
+            Iterator<Point> iterator = linkedList.iterator();
             for (int i = 0; i <= 2; i++) {
                 iterator.next();
             }
@@ -174,7 +174,7 @@ public class LinkedListTabulatedFunctionTest {
         while (iterator.hasNext()) {
             Point point = iterator.next();
             assertEquals(firstList.getX(i), point.x, 0.0001);
-            assertEquals(point.y, firstList.getY(i++), 0.0001);
+            assertEquals(firstList.getY(i++), point.y, 0.0001);
         }
     }
 
@@ -184,7 +184,7 @@ public class LinkedListTabulatedFunctionTest {
         int i = 0;
         for (Point point : firstList) {
             assertEquals(firstList.getX(i), point.x, 0.0001);
-            assertEquals(point.y, firstList.getY(i++), 0.0001);
+            assertEquals(firstList.getY(i++), point.y, 0.0001);
         }
     }
 }
