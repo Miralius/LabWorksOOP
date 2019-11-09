@@ -1,8 +1,10 @@
 package ru.ssau.tk.frolvas.labworksoop.functions;
 
+import org.jetbrains.annotations.NotNull;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
@@ -187,8 +189,24 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
+    @NotNull
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<>() {
+            private Node node = head;
+
+            public boolean hasNext() {
+                return (node != null);
+            }
+
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point(node.x, node.y);
+                node = (node != head.prev) ? node.next : null;
+                return point;
+            }
+        };
     }
 }

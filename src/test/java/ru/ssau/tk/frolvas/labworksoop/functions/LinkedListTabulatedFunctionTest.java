@@ -3,6 +3,9 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 import org.testng.annotations.Test;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static org.testng.Assert.*;
 
 
@@ -43,6 +46,15 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(InterpolationException.class, () -> {
             LinkedListTabulatedFunction firstList = listOfArray();
             firstList.interpolate(5.5, 0);
+        });
+        assertThrows(NoSuchElementException.class, () -> {
+            double[] valuesX = new double[]{-3., 5};
+            double[] valuesY = new double[]{9., 5};
+            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(valuesX, valuesY);
+            Iterator<Point> iterator = unitLinkedList.iterator();
+            for (int i = 0; i <= 2; i++) {
+                iterator.next();
+            }
         });
     }
 
@@ -152,5 +164,27 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.interpolate(2.5, 0), 3.5);
         assertEquals(secondList.interpolate(7.5, 7), 427.5);
+    }
+
+    @Test
+    void testIteratorThroughWhile() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        Iterator<Point> iterator = firstList.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(firstList.getX(i), point.x, 0.0001);
+            assertEquals(point.y, firstList.getY(i++), 0.0001);
+        }
+    }
+
+    @Test
+    void testIteratorThroughForEach() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        int i = 0;
+        for (Point point : firstList) {
+            assertEquals(firstList.getX(i), point.x, 0.0001);
+            assertEquals(point.y, firstList.getY(i++), 0.0001);
+        }
     }
 }
