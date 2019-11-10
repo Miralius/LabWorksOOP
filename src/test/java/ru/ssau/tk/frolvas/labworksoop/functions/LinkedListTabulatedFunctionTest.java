@@ -29,15 +29,19 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> {
             double[] valuesX = new double[]{-3.};
             double[] valuesY = new double[]{9.};
-            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(valuesX, valuesY);
+            new LinkedListTabulatedFunction(valuesX, valuesY);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             MathFunction sqrFunc = new SqrFunction();
-            LinkedListTabulatedFunction unitLinkedList = new LinkedListTabulatedFunction(sqrFunc, 1, 1, 1);
+            new LinkedListTabulatedFunction(sqrFunc, 1, 1, 1);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             LinkedListTabulatedFunction firstList = listOfArray();
             firstList.floorIndexOfX(-5);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            LinkedListTabulatedFunction firstList = listOfArray();
+            firstList.floorNodeOfX(-5);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             LinkedListTabulatedFunction firstList = listOfArray();
@@ -55,6 +59,10 @@ public class LinkedListTabulatedFunctionTest {
             for (int i = 0; i <= 2; i++) {
                 iterator.next();
             }
+        });
+        assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction firstList = listOfArray();
+            firstList.interpolate(5.5, firstList.floorNodeOfX(7.5));
         });
     }
 
@@ -122,7 +130,7 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
         assertEquals(firstList.indexOfX(5), 2);
         assertEquals(secondList.indexOfX(0), 0);
-
+        assertEquals(secondList.indexOfX(11), -1);
     }
 
     @Test
@@ -146,8 +154,8 @@ public class LinkedListTabulatedFunctionTest {
     public void testExtrapolateLeft() {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        assertEquals(firstList.extrapolateLeft(1.5), 2.5);
-        assertEquals(secondList.extrapolateLeft(0.5), 0.5);
+        assertEquals(firstList.extrapolateLeft(1.5), 2.5, ACCURACY);
+        assertEquals(secondList.extrapolateLeft(0.5), 0.5, ACCURACY);
     }
 
     @Test
@@ -162,8 +170,8 @@ public class LinkedListTabulatedFunctionTest {
     public void testInterpolate() {
         LinkedListTabulatedFunction firstList = listOfArray();
         LinkedListTabulatedFunction secondList = listOfSecondDesigner();
-        assertEquals(firstList.interpolate(2.5, 0), 3.5);
-        assertEquals(secondList.interpolate(7.5, 7), 427.5);
+        assertEquals(firstList.interpolate(2.5, 0), 3.5, ACCURACY);
+        assertEquals(secondList.interpolate(7.5, 7), 427.5, ACCURACY);
     }
 
     @Test
@@ -173,8 +181,8 @@ public class LinkedListTabulatedFunctionTest {
         int i = 0;
         while (iterator.hasNext()) {
             Point point = iterator.next();
-            assertEquals(firstList.getX(i), point.x, 0.0001);
-            assertEquals(firstList.getY(i++), point.y, 0.0001);
+            assertEquals(firstList.getX(i), point.x, ACCURACY);
+            assertEquals(firstList.getY(i++), point.y, ACCURACY);
         }
     }
 
@@ -183,8 +191,17 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction firstList = listOfArray();
         int i = 0;
         for (Point point : firstList) {
-            assertEquals(firstList.getX(i), point.x, 0.0001);
-            assertEquals(firstList.getY(i++), point.y, 0.0001);
+            assertEquals(firstList.getX(i), point.x, ACCURACY);
+            assertEquals(firstList.getY(i++), point.y, ACCURACY);
         }
+    }
+
+    @Test
+    public void testApply() {
+        LinkedListTabulatedFunction firstList = listOfArray();
+        assertEquals(firstList.apply(0.), 1., ACCURACY);
+        assertEquals(firstList.apply(10.), 11., ACCURACY);
+        assertEquals(firstList.apply(1), 2., ACCURACY);
+        assertEquals(firstList.apply(1.5), 2.5, ACCURACY);
     }
 }

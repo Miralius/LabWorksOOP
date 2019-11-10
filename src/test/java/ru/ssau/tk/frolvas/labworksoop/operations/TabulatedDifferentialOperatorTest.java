@@ -10,7 +10,7 @@ public class TabulatedDifferentialOperatorTest {
 
     @Test
     public void testGetFactory() {
-        TabulatedDifferentialOperator defaultDiffOperator = new TabulatedDifferentialOperator();
+        TabulatedDifferentialOperator defaultDiffOperator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
         assertTrue(defaultDiffOperator.getFactory() instanceof ArrayTabulatedFunctionFactory);
     }
 

@@ -21,11 +21,11 @@ public class ArrayTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> {
             double[] valuesX = new double[]{-3.};
             double[] valuesY = new double[]{9.};
-            ArrayTabulatedFunction unitArray = new ArrayTabulatedFunction(valuesX, valuesY);
+            new ArrayTabulatedFunction(valuesX, valuesY);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             MathFunction sqrFunc = new SqrFunction();
-            ArrayTabulatedFunction unitArray = new ArrayTabulatedFunction(sqrFunc, 1, 1, 1);
+            new ArrayTabulatedFunction(sqrFunc, 1, 1, 1);
         });
         assertThrows(IllegalArgumentException.class, () -> definedThroughArrays.floorIndexOfX(-5));
         assertThrows(InterpolationException.class, () -> {

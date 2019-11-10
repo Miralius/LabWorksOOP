@@ -67,57 +67,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
-    public int getCount() {
-        return count;
-    }
-
     public double leftBound() {
         return head.x;
     }
 
     public double rightBound() {
         return head.prev.x;
-    }
-
-    private Node getNode(int index) {
-        checkIncludeInBounds(index);
-        Node first;
-        if (index > (count / 2)) {
-            first = head.prev;
-            for (int i = count - 1; i > 0; i--) {
-                if (i == index) {
-                    break;
-                } else {
-                    first = first.prev;
-                }
-            }
-
-        } else {
-            first = head;
-            for (int i = 0; i < count; i++) {
-                if (i == index) {
-                    break;
-                } else {
-                    first = first.next;
-                }
-            }
-        }
-        return first;
-    }
-
-    public double getX(int index) {
-        checkIncludeInBounds(index);
-        return getNode(index).x;
-    }
-
-    public double getY(int index) {
-        checkIncludeInBounds(index);
-        return getNode(index).y;
-    }
-
-    public void setY(int index, double valueY) {
-        checkIncludeInBounds(index);
-        getNode(index).y = valueY;
     }
 
     public int indexOfX(double x) {
@@ -163,6 +118,22 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return getCount();
     }
 
+    protected Node floorNodeOfX(double x) {
+        if (x < head.x) {
+            throw new IllegalArgumentException("X is less than minimal value in linked list");
+        }
+        Node buff;
+        buff = head;
+        for (int i = 0; i < count; i++) {
+            if (buff.x < x) {
+                buff = buff.next;
+            } else {
+                break;
+            }
+        }
+        return buff.prev;
+    }
+
     @Override
     protected double extrapolateLeft(double x) {
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
@@ -181,6 +152,14 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             throw new InterpolationException("X is out of bounds of interpolation");
         }
         return interpolate(x, left.x, right.x, left.y, right.y);
+    }
+
+    protected double interpolate(double x, Node floorNode) {
+        Node right = floorNode.next;
+        if (x < floorNode.x || right.x < x) {
+            throw new InterpolationException("X is out of bounds of interpolation");
+        }
+        return interpolate(x, floorNode.x, right.x, floorNode.y, right.y);
     }
 
     private void checkIncludeInBounds(int index) {
@@ -208,5 +187,63 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
                 return point;
             }
         };
+    }
+
+    @Override
+    public double apply(double x) {
+        final int indexOfX = indexOfX(x);
+        if (x < leftBound()) {
+            return extrapolateLeft(x);
+        } else if (x > rightBound()) {
+            return extrapolateRight(x);
+        } else if (indexOfX != -1) {
+            return getY(indexOfX);
+        } else {
+            return interpolate(x, floorNodeOfX(x));
+        }
+    }
+
+    private Node getNode(int index) {
+        checkIncludeInBounds(index);
+        Node first;
+        if (index > (count / 2)) {
+            first = head.prev;
+            for (int i = count - 1; i > 0; i--) {
+                if (i == index) {
+                    break;
+                } else {
+                    first = first.prev;
+                }
+            }
+        } else {
+            first = head;
+            for (int i = 0; i < count; i++) {
+                if (i == index) {
+                    break;
+                } else {
+                    first = first.next;
+                }
+            }
+        }
+        return first;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public double getX(int index) {
+        checkIncludeInBounds(index);
+        return getNode(index).x;
+    }
+
+    public double getY(int index) {
+        checkIncludeInBounds(index);
+        return getNode(index).y;
+    }
+
+    public void setY(int index, double valueY) {
+        checkIncludeInBounds(index);
+        getNode(index).y = valueY;
     }
 }
