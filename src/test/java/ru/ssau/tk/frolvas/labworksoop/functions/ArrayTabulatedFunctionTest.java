@@ -210,4 +210,54 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(definedThroughArrays.getY(i++), point.y, 0.0001);
         }
     }
+
+    @Test
+    public void testInsert() {
+        double[] valuesXFirst = new double[]{1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19., 20.};
+        double[] valuesYFirst = new double[]{2., 4., 6., 8., 10., 12., 14., 16., 18., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40.};
+        ArrayTabulatedFunction testInsertArrayFirst = new ArrayTabulatedFunction(valuesXFirst, valuesYFirst);
+        testInsertArrayFirst.insert(0., 0.);
+        testInsertArrayFirst.insert(0., 0.);
+        for (int i = 0; i < testInsertArrayFirst.getCount(); i++) {
+            assertEquals(testInsertArrayFirst.getX(i), i, DOUBLE_EPSILON);
+            assertEquals(testInsertArrayFirst.getY(i), 2 * i, DOUBLE_EPSILON);
+        }
+        testInsertArrayFirst.insert(-1., -2.);
+        for (int i = 0; i < testInsertArrayFirst.getCount(); i++) {
+            assertEquals(testInsertArrayFirst.getX(i), i - 1, DOUBLE_EPSILON);
+            assertEquals(testInsertArrayFirst.getY(i), 2 * (i - 1), DOUBLE_EPSILON);
+        }
+
+        double[] valuesXSecond = new double[]{0., 1., 2., 3., 4., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19., 20.};
+        double[] valuesYSecond = new double[]{0., 2., 4., 6., 8., 14., 16., 18., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40.};
+        ArrayTabulatedFunction testInsertArraySecond = new ArrayTabulatedFunction(valuesXSecond, valuesYSecond);
+        testInsertArraySecond.insert(5., 10.);
+        for (int i = 0; i < 6; i++) {
+            assertEquals(testInsertArraySecond.getX(i), i, DOUBLE_EPSILON);
+            assertEquals(testInsertArraySecond.getY(i), 2 * i, DOUBLE_EPSILON);
+        }
+        for (int i = 6; i < testInsertArraySecond.getCount(); i++) {
+            assertEquals(testInsertArraySecond.getX(i), i + 1, DOUBLE_EPSILON);
+            assertEquals(testInsertArraySecond.getY(i), 2 * (i + 1), DOUBLE_EPSILON);
+        }
+        testInsertArraySecond.insert(6., 12.);
+        for (int i = 0; i < testInsertArraySecond.getCount(); i++) {
+            assertEquals(testInsertArraySecond.getX(i), i, DOUBLE_EPSILON);
+            assertEquals(testInsertArraySecond.getY(i), 2 * i, DOUBLE_EPSILON);
+        }
+
+        double[] valuesXThird = new double[]{0., 1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19., 20.};
+        double[] valuesYThird = new double[]{0., 2., 4., 6., 8., 10., 12., 14., 16., 18., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40.};
+        ArrayTabulatedFunction testInsertArrayThird = new ArrayTabulatedFunction(valuesXThird, valuesYThird);
+        testInsertArrayThird.insert(21., 42.);
+        for (int i = 0; i < testInsertArrayThird.getCount(); i++) {
+            assertEquals(testInsertArrayThird.getX(i), i, DOUBLE_EPSILON);
+            assertEquals(testInsertArrayThird.getY(i), 2 * i, DOUBLE_EPSILON);
+        }
+        testInsertArrayThird.insert(22., 44.);
+        for (int i = 0; i < testInsertArrayThird.getCount(); i++) {
+            assertEquals(testInsertArrayThird.getX(i), i, DOUBLE_EPSILON);
+            assertEquals(testInsertArrayThird.getY(i), 2 * i, DOUBLE_EPSILON);
+        }
+    }
 }

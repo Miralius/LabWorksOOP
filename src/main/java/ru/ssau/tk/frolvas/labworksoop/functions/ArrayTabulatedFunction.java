@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 import static java.lang.Math.abs;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private double[] xValues, yValues;
     private int count;
     private final double DOUBLE_EPSILON = 1E-12;
@@ -102,6 +102,60 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
+    public void insert(double x, double y) {
+        int i = indexOfX(x);
+        if (i != -1) {
+            setY(i, y);
+        } else {
+            int index = x < xValues[0] ? 0 : floorIndexOfX(x);
+            count++;
+            if (xValues.length == (count - 1)) {
+                double[] xTmp = new double[(int) (count * 1.1)];
+                double[] yTmp = new double[(int) (count * 1.1)];
+                if (index == 0) {
+                    xTmp[0] = x;
+                    yTmp[0] = y;
+                    System.arraycopy(xValues, 0, xTmp, 1, count - 1);
+                    System.arraycopy(yValues, 0, yTmp, 1, count - 1);
+                } else if (index == count - 1) {
+                    System.arraycopy(xValues, 0, xTmp, 0, count - 1);
+                    System.arraycopy(yValues, 0, yTmp, 0, count - 1);
+                    xTmp[index] = x;
+                    yTmp[index] = y;
+                } else {
+                    System.arraycopy(xValues, 0, xTmp, 0, index + 1);
+                    System.arraycopy(yValues, 0, yTmp, 0, index + 1);
+                    xTmp[index + 1] = x;
+                    yTmp[index + 1] = y;
+                    System.arraycopy(xValues, index + 1, xTmp, index + 2, (count - index - 2));
+                    System.arraycopy(yValues, index + 1, yTmp, index + 2, (count - index - 2));
+                }
+                this.xValues = xTmp;
+                this.yValues = yTmp;
+            } else {
+                if (index == 0) {
+                    for (int j = (count - 1); j != 0; j--) {
+                        this.xValues[j] = this.xValues[j - 1];
+                        this.yValues[j] = this.yValues[j - 1];
+                    }
+                    this.xValues[0] = x;
+                    this.yValues[0] = y;
+                } else if (index == count - 1) {
+                    this.xValues[index] = x;
+                    this.yValues[index] = y;
+                } else {
+                    for (int j = (count - 1); j != index + 1; j--) {
+                        this.xValues[j] = this.xValues[j - 1];
+                        this.yValues[j] = this.yValues[j - 1];
+                    }
+                    this.xValues[index + 1] = x;
+                    this.yValues[index + 1] = y;
+                }
+            }
+        }
+    }
+
+    @Override
     public void remove(int index) {
         count--;
         double[] xTempValues = new double[count];
@@ -162,5 +216,4 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public void setY(int index, double value) {
         yValues[index] = value;
     }
-
 }

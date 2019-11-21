@@ -191,13 +191,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double apply(double x) {
-        final int indexOfX = indexOfX(x);
         if (x < leftBound()) {
             return extrapolateLeft(x);
         } else if (x > rightBound()) {
             return extrapolateRight(x);
-        } else if (indexOfX != -1) {
-            return getY(indexOfX);
+        } else if (indexOfX(x) != -1) {
+            return getY(indexOfX(x));
         } else {
             return interpolate(x, floorNodeOfX(x));
         }
