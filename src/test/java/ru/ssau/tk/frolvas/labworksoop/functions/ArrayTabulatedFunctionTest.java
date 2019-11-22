@@ -197,8 +197,8 @@ public class ArrayTabulatedFunctionTest {
         int i = 0;
         while (iterator.hasNext()) {
             Point point = iterator.next();
-            assertEquals(definedThroughArrays.getX(i), point.x, 0.0001);
-            assertEquals(definedThroughArrays.getY(i++), point.y, 0.0001);
+            assertEquals(definedThroughArrays.getX(i), point.x, DOUBLE_EPSILON);
+            assertEquals(definedThroughArrays.getY(i++), point.y, DOUBLE_EPSILON);
         }
     }
 
@@ -206,8 +206,8 @@ public class ArrayTabulatedFunctionTest {
     void testIteratorThroughForEach() {
         int i = 0;
         for (Point point : definedThroughArrays) {
-            assertEquals(definedThroughArrays.getX(i), point.x, 0.0001);
-            assertEquals(definedThroughArrays.getY(i++), point.y, 0.0001);
+            assertEquals(definedThroughArrays.getX(i), point.x, DOUBLE_EPSILON);
+            assertEquals(definedThroughArrays.getY(i++), point.y, DOUBLE_EPSILON);
         }
     }
 
