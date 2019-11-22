@@ -11,7 +11,7 @@ public final class FunctionsIO {
         throw new UnsupportedOperationException();
     }
 
-    static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
+    public static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
         DataOutputStream out = new DataOutputStream(outputStream);
         out.writeInt(function.getCount());
         for (Point newPoint : function) {
@@ -34,4 +34,8 @@ public final class FunctionsIO {
 
     }
 
+    public static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException {
+        ObjectInputStream stream1 = new ObjectInputStream(stream);
+        return (TabulatedFunction) stream1.readObject();
+    }
 }
