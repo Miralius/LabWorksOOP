@@ -4,10 +4,7 @@ import ru.ssau.tk.frolvas.labworksoop.functions.Point;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 import ru.ssau.tk.frolvas.labworksoop.functions.factory.TabulatedFunctionFactory;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public final class FunctionsIO {
     private FunctionsIO() {
@@ -22,6 +19,19 @@ public final class FunctionsIO {
             out.writeDouble(newPoint.y);
         }
         out.flush();
+    }
+
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+        DataInputStream in = new DataInputStream(inputStream);
+        int length = in.readInt();
+        double[] xValues = new double[length];
+        double[] yValues = new double[length];
+        for (int i = 0; i < length; i++) {
+            xValues[i] = in.readDouble();
+            yValues[i] = in.readDouble();
+        }
+        return factory.create(xValues, yValues);
+
     }
 
 }
