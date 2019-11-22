@@ -3,13 +3,15 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 import org.jetbrains.annotations.NotNull;
 import ru.ssau.tk.frolvas.labworksoop.exceptions.*;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static java.lang.Math.abs;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+    private static final long serialVersionUID = 978751603564990109L;
     private double[] xValues, yValues;
     private int count;
     private final double DOUBLE_EPSILON = 1E-12;
