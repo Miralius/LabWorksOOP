@@ -50,4 +50,16 @@ public class AbstractTabulatedFunctionTest {
             throw new InterpolationException();
         });
     }
+
+    @Test
+    public void testToString() {
+        double[] xValues = {0.0, 0.5, 1.0};
+        double[] yValues = {0.0, 0.25, 1.0};
+        ArrayTabulatedFunction arrayFunc = new ArrayTabulatedFunction(xValues, yValues);
+        LinkedListTabulatedFunction linkFunck = new LinkedListTabulatedFunction(xValues, yValues);
+        String stringOfLink = "LinkedListTabulatedFunction size = 3\n[0.0; 0.0]\n[0.5; 0.25]\n[1.0; 1.0]";
+        String stringOfArr = "ArrayTabulatedFunction size = 3\n[0.0; 0.0]\n[0.5; 0.25]\n[1.0; 1.0]";
+        assertEquals(stringOfArr, arrayFunc.toString());
+        assertEquals(stringOfLink, linkFunck.toString());
+    }
 }
