@@ -43,6 +43,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         }
     }
 
+    @Override
     public String toString() {
         StringBuilder representString = new StringBuilder();
         representString.append(this.getClass().getSimpleName()).append(" ").append("size = ").append(this.getCount());

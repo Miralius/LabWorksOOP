@@ -2,12 +2,14 @@ package ru.ssau.tk.frolvas.labworksoop.io;
 
 import ru.ssau.tk.frolvas.labworksoop.functions.Point;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
+import ru.ssau.tk.frolvas.labworksoop.functions.factory.TabulatedFunctionFactory;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-final class FunctionsIO {
+public final class FunctionsIO {
     private FunctionsIO() {
         throw new UnsupportedOperationException();
     }
