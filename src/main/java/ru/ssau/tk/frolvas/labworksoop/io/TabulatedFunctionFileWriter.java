@@ -9,13 +9,10 @@ public class TabulatedFunctionFileWriter {
         ArrayTabulatedFunction arrayTabulatedFunction = new ArrayTabulatedFunction(new SqrtFunction(), 0, 10, 11);
         LinkedListTabulatedFunction linkedListTabulatedFunction = new LinkedListTabulatedFunction(new Cube(), 0, 10, 11);
 
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("output/array function.txt"))) {
-            FunctionsIO.writeTabulatedFunction(fileWriter, arrayTabulatedFunction);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {BufferedWriter fileWriter = new BufferedWriter(new FileWriter("output/linked list function.txt"));
-            FunctionsIO.writeTabulatedFunction(fileWriter, linkedListTabulatedFunction);
+        try (BufferedWriter fileWriterFirst = new BufferedWriter(new FileWriter("output/array function.txt"));
+             BufferedWriter fileWriterSecond = new BufferedWriter(new FileWriter("output/linked list function.txt"))) {
+            FunctionsIO.writeTabulatedFunction(fileWriterFirst, arrayTabulatedFunction);
+            FunctionsIO.writeTabulatedFunction(fileWriterSecond, linkedListTabulatedFunction);
         } catch (IOException e) {
             e.printStackTrace();
         }
