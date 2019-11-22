@@ -49,6 +49,9 @@ public class AbstractTabulatedFunctionTest {
         assertThrows(InterpolationException.class, () -> {
             throw new InterpolationException();
         });
+        assertThrows(InconsistentFunctionsException.class, () -> {
+            throw new InconsistentFunctionsException();
+        });
     }
 
     @Test

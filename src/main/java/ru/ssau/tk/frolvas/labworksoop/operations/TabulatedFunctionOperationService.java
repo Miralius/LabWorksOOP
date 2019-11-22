@@ -6,7 +6,6 @@ import ru.ssau.tk.frolvas.labworksoop.functions.factory.*;
 
 public class TabulatedFunctionOperationService {
     private TabulatedFunctionFactory factory;
-    private final double DOUBLE_EPSILON = 1E-12;
 
     public TabulatedFunctionOperationService(TabulatedFunctionFactory factory) {
         this.factory = factory;
@@ -39,6 +38,7 @@ public class TabulatedFunctionOperationService {
         double[] xValues = new double[a.getCount()];
         double[] yValues = new double[a.getCount()];
         for (int i = 0; i < a.getCount(); i++) {
+            double DOUBLE_EPSILON = 1E-12;
             if (Math.abs(aPoints[i].x - bPoints[i].x) > DOUBLE_EPSILON) {
                 throw new InconsistentFunctionsException("X-coordinates of the functions are various");
             }
