@@ -52,7 +52,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
-    void addNode(double x, double y) {
+    protected void addNode(double x, double y) {
         Node newNode = new Node();
         if (head == null) {
             head = newNode;
@@ -207,27 +207,27 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private Node getNode(int index) {
         checkIncludeInBounds(index);
-        Node first;
+        Node node;
         if (index > (count / 2)) {
-            first = head.prev;
+            node = head.prev;
             for (int i = count - 1; i > 0; i--) {
                 if (i == index) {
                     break;
                 } else {
-                    first = first.prev;
+                    node = node.prev;
                 }
             }
         } else {
-            first = head;
+            node = head;
             for (int i = 0; i < count; i++) {
                 if (i == index) {
                     break;
                 } else {
-                    first = first.next;
+                    node = node.next;
                 }
             }
         }
-        return first;
+        return node;
     }
 
     public int getCount() {

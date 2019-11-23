@@ -32,18 +32,12 @@ public final class FunctionsIO {
     }
 
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException {
-        int count;
-        try {
-            count = Integer.parseInt(reader.readLine());
-        } catch (NumberFormatException nfe) {
-            throw new IOException(nfe);
-        }
+        int count = Integer.parseInt(reader.readLine());
         double[] xValues = new double[count];
         double[] yValues = new double[count];
         NumberFormat formatter = NumberFormat.getInstance(Locale.forLanguageTag("ru"));
-        String tempString;
         for (int i = 0; i < count; i++) {
-            tempString = reader.readLine();
+            String tempString = reader.readLine();
             try {
                 xValues[i] = formatter.parse(tempString.split(" ")[0]).doubleValue();
                 yValues[i] = formatter.parse(tempString.split(" ")[1]).doubleValue();

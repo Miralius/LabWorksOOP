@@ -184,6 +184,7 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(firstList.getX(i), point.x, ACCURACY);
             assertEquals(firstList.getY(i++), point.y, ACCURACY);
         }
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
     @Test

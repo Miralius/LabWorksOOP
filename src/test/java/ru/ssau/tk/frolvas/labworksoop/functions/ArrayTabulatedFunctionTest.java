@@ -40,6 +40,12 @@ public class ArrayTabulatedFunctionTest {
                 iterator.next();
             }
         });
+        assertThrows(IllegalArgumentException.class, () -> {
+            double[] valuesXTwice = new double[]{-3., -2.};
+            double[] valuesYTwice = new double[]{9., 4.};
+            ArrayTabulatedFunction testRemoveTwiceArray = new ArrayTabulatedFunction(valuesXTwice, valuesYTwice);
+            testRemoveTwiceArray.remove(0);
+        });
     }
 
     @Test
@@ -200,6 +206,7 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(definedThroughArrays.getX(i), point.x, DOUBLE_EPSILON);
             assertEquals(definedThroughArrays.getY(i++), point.y, DOUBLE_EPSILON);
         }
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
     @Test

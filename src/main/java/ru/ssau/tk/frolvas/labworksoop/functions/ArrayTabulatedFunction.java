@@ -159,6 +159,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void remove(int index) {
+        if (count == 2) throw new IllegalArgumentException("Number of values will being less than minimum (2) after removing");
         count--;
         double[] xTempValues = new double[count];
         double[] yTempValues = new double[count];
