@@ -15,7 +15,7 @@ public class TabulatedFunctionOperationService {
         factory = new ArrayTabulatedFunctionFactory();
     }
 
-    static Point[] asPoints(TabulatedFunction tabulatedFunction) {
+    public static Point[] asPoints(TabulatedFunction tabulatedFunction) {
         int i = 0;
         Point[] points = new Point[tabulatedFunction.getCount()];
         for (Point newPoint : tabulatedFunction) {

@@ -3,6 +3,8 @@ package ru.ssau.tk.frolvas.labworksoop.concurrent;
 import org.testng.annotations.Test;
 import ru.ssau.tk.frolvas.labworksoop.functions.*;
 
+import java.util.Iterator;
+
 import static org.testng.Assert.*;
 
 public class SynchronizedTabulatedFunctionTest {
@@ -93,5 +95,21 @@ public class SynchronizedTabulatedFunctionTest {
         assertEquals(syncSecondList.apply(4.0), 16.0);
         assertEquals(syncFirstArray.apply(5.0), 10.0);
         assertEquals(syncSecondList.apply(10.0), 100.0);
+    }
+
+    @Test
+    public void testIterator() {
+        Iterator<Point> iteratorArray = firstArray.iterator();
+        int i = 0;
+        while (iteratorArray.hasNext()) {
+            Point point = iteratorArray.next();
+            assertEquals(syncFirstArray.getX(i), point.x, 0.0001);
+            assertEquals(syncFirstArray.getY(i++), point.y, 0.0001);
+        }
+        i = 0;
+        for (Point point : syncFirstArray) {
+            assertEquals(syncFirstArray.getX(i), point.x, 0.0001);
+            assertEquals(syncFirstArray.getY(i++), point.y, 0.0001);
+        }
     }
 }

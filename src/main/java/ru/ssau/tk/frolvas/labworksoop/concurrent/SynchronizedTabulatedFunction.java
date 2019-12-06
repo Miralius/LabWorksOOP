@@ -2,8 +2,11 @@ package ru.ssau.tk.frolvas.labworksoop.concurrent;
 
 import ru.ssau.tk.frolvas.labworksoop.functions.Point;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
+import ru.ssau.tk.frolvas.labworksoop.operations.TabulatedFunctionOperationService;
+
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
     TabulatedFunction tabulatedFunction;
@@ -71,7 +74,24 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     @Override
     public Iterator<Point> iterator() {
         synchronized (tabulatedFunction) {
-            return tabulatedFunction.iterator();
+            Point[] copy = TabulatedFunctionOperationService.asPoints(tabulatedFunction);
+            return new Iterator<>() {
+                int i = 0;
+
+                @Override
+                public boolean hasNext() {
+                    return i != copy.length;
+                }
+
+                @Override
+                public Point next() {
+                    if (i==copy.length) {
+                        throw new NoSuchElementException();
+                    } else {
+                        return new Point(copy[i].x, copy[i++].y);
+                    }
+                }
+            };
         }
     }
 
