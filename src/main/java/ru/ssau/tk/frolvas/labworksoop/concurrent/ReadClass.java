@@ -3,9 +3,9 @@ package ru.ssau.tk.frolvas.labworksoop.concurrent;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 
 public class ReadClass implements Runnable {
-    private TabulatedFunction tabulatedFunction;
+    final private TabulatedFunction tabulatedFunction;
 
-    ReadClass(TabulatedFunction tabulatedFunction) {
+    public ReadClass(TabulatedFunction tabulatedFunction) {
         this.tabulatedFunction = tabulatedFunction;
     }
 

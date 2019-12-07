@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
-    TabulatedFunction tabulatedFunction;
+    final TabulatedFunction tabulatedFunction;
 
     SynchronizedTabulatedFunction(TabulatedFunction tabulatedFunction) {
         this.tabulatedFunction = tabulatedFunction;
@@ -85,7 +85,7 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
 
                 @Override
                 public Point next() {
-                    if (i==copy.length) {
+                    if (i == copy.length) {
                         throw new NoSuchElementException();
                     } else {
                         return new Point(copy[i].x, copy[i++].y);

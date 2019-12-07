@@ -3,7 +3,7 @@ package ru.ssau.tk.frolvas.labworksoop.concurrent;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 
 public class WriteTask implements Runnable {
-    private TabulatedFunction tabulatedFunction;
+    final private TabulatedFunction tabulatedFunction;
     private double value;
 
     WriteTask(TabulatedFunction tabulatedFunction, double value) {
