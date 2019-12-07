@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Serializable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
 
     private static final long serialVersionUID = -152659147714871981L;
     private int count;
@@ -221,6 +221,16 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
             count++;
         }
+    }
+
+    @Override
+    public void remove(int index) {
+        if (count == 2) throw new IllegalArgumentException("Number of values will being less than minimum (2) after removing");
+        checkIncludeInBounds(index);
+        Node executed = getNode(index);
+        count--;
+        executed.prev.next = executed.next;
+        executed.next.prev = executed.prev;
     }
 
     @Override

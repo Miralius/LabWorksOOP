@@ -203,12 +203,26 @@ public class LinkedListTabulatedFunctionTest {
         double[] valuesYFirst = new double[]{2., 4., 6., 8., 10., 12., 16., 18., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40.};
         var testInsertLinkedListFirst = new LinkedListTabulatedFunction(valuesXFirst, valuesYFirst);
         testInsertLinkedListFirst.insert(0., 0.);
+        testInsertLinkedListFirst.insert(0., 0.);
         testInsertLinkedListFirst.insert(7., 14.);
         testInsertLinkedListFirst.insert(21., 42.);
         for (int i = 0; i < 22; i++) {
             assertEquals(testInsertLinkedListFirst.getX(i), i, ACCURACY);
             assertEquals(testInsertLinkedListFirst.getY(i), 2 * i, ACCURACY);
         }
+    }
+
+    @Test
+    public void testRemove() {
+        double[] valuesX = new double[]{0., 1., 2.};
+        double[] valuesY = new double[]{0., 1., 4.};
+        var testRemoveArray = new LinkedListTabulatedFunction(valuesX, valuesY);
+        testRemoveArray.remove(2);
+        for (int i = 0; i < 2; i++) {
+            assertEquals(testRemoveArray.getX(i), i, ACCURACY);
+            assertEquals(testRemoveArray.getY(i), i * i, ACCURACY);
+        }
+        assertThrows(IllegalArgumentException.class, () -> testRemoveArray.remove(0));
     }
 
     @Test
