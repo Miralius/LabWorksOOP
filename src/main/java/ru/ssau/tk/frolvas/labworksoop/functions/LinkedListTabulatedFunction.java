@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Serializable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Serializable {
 
     private static final long serialVersionUID = -152659147714871981L;
     private int count;
@@ -190,6 +190,37 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 return point;
             }
         };
+    }
+
+    @Override
+    public void insert(double x, double y) {
+        if (indexOfX(x) != -1) {
+            setY(indexOfX(x), y);
+        } else {
+            int index = x < head.x ? 0 : floorIndexOfX(x);
+            Node newNode = new Node();
+            if (index == 0 || index == count) {
+                newNode.next = head;
+                newNode.prev = head.prev;
+                newNode.x = x;
+                newNode.y = y;
+                head.prev.next = newNode;
+                if (index == 0) {
+                    head = newNode;
+                } else {
+                    head.prev = newNode;
+                }
+            } else {
+                Node previous = getNode(index);
+                newNode.next = previous.next;
+                newNode.prev = previous;
+                newNode.x = x;
+                newNode.y = y;
+                previous.next = newNode;
+                newNode.next.prev = newNode;
+            }
+            count++;
+        }
     }
 
     @Override

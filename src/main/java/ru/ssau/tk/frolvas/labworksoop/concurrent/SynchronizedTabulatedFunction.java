@@ -1,5 +1,6 @@
 package ru.ssau.tk.frolvas.labworksoop.concurrent;
 
+import org.jetbrains.annotations.NotNull;
 import ru.ssau.tk.frolvas.labworksoop.functions.Point;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 import ru.ssau.tk.frolvas.labworksoop.operations.TabulatedFunctionOperationService;
@@ -71,6 +72,7 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
         }
     }
 
+    @NotNull
     @Override
     public Iterator<Point> iterator() {
         synchronized (tabulatedFunction) {
