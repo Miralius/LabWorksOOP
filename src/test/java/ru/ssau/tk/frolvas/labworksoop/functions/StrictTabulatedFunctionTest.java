@@ -2,8 +2,6 @@ package ru.ssau.tk.frolvas.labworksoop.functions;
 
 import org.testng.annotations.Test;
 
-import java.util.NoSuchElementException;
-
 import static org.testng.Assert.*;
 
 public class StrictTabulatedFunctionTest {
