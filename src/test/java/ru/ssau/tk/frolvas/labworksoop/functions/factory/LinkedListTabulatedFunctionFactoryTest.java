@@ -13,6 +13,8 @@ public class LinkedListTabulatedFunctionFactoryTest {
     public void testCreate() {
         TabulatedFunctionFactory arrayTabulatedFunctionFactory = new ArrayTabulatedFunctionFactory();
         TabulatedFunction funcOne = arrayTabulatedFunctionFactory.create(xValues, yValues);
+        TabulatedFunction strict = arrayTabulatedFunctionFactory.createStrict(xValues, yValues);
         assertTrue(funcOne instanceof ArrayTabulatedFunction);
+        assertTrue(strict instanceof StrictTabulatedFunction);
     }
 }

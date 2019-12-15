@@ -15,4 +15,13 @@ public class ArrayTabulatedFunctionFactoryTest {
         TabulatedFunction funcTwo = linkedListTabulatedFunctionFactory.create(xValues, yValues);
         assertTrue(funcTwo instanceof LinkedListTabulatedFunction);
     }
+
+    @Test
+    public void testCreateStrict() {
+        TabulatedFunctionFactory linkedListTabulatedFunctionFactory = new LinkedListTabulatedFunctionFactory();
+        TabulatedFunction funcTwo = linkedListTabulatedFunctionFactory.create(xValues, yValues);
+        TabulatedFunction strict = linkedListTabulatedFunctionFactory.createStrict(xValues, yValues);
+        assertTrue(funcTwo instanceof LinkedListTabulatedFunction);
+        assertTrue(strict instanceof StrictTabulatedFunction);
+    }
 }
