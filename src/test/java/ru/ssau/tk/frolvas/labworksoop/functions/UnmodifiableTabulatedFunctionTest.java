@@ -10,6 +10,7 @@ public class UnmodifiableTabulatedFunctionTest {
             new ArrayTabulatedFunction(new double[]{1., 2., 3.}, new double[]{1., 4., 9.}));
     TabulatedFunction list = new UnmodifiableTabulatedFunction(
             new LinkedListTabulatedFunction(new double[]{1., 2., 3., 4.}, new double[]{1., 4., 9., 16}));
+    TabulatedFunction unmodifiableInStrict = new StrictTabulatedFunction(array);
 
     @Test
     public void testGetCount() {
@@ -33,6 +34,7 @@ public class UnmodifiableTabulatedFunctionTest {
     public void testSetY() {
         assertThrows(UnsupportedOperationException.class, () -> array.setY(0, 2.));
         assertThrows(UnsupportedOperationException.class, () -> list.setY(3, 1.));
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableInStrict.setY(1, 2.5));
     }
 
     @Test
@@ -69,5 +71,6 @@ public class UnmodifiableTabulatedFunctionTest {
     public void testApply() {
         assertEquals(array.apply(3.5), 11.5, DOUBLE_EPSILON);
         assertEquals(list.apply(4.1), 16.699999999999999, DOUBLE_EPSILON);
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableInStrict.apply(3.5));
     }
 }
