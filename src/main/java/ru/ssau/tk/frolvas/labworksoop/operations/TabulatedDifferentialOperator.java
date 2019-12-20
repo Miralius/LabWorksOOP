@@ -1,5 +1,6 @@
 package ru.ssau.tk.frolvas.labworksoop.operations;
 
+import ru.ssau.tk.frolvas.labworksoop.concurrent.*;
 import ru.ssau.tk.frolvas.labworksoop.functions.*;
 import ru.ssau.tk.frolvas.labworksoop.functions.factory.*;
 
@@ -35,5 +36,11 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         }
         yValues[xValues.length - 1] = yValues[xValues.length - 2];
         return factory.create(xValues, yValues);
+    }
+
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        if (!(function instanceof SynchronizedTabulatedFunction))
+            function = new SynchronizedTabulatedFunction(function);
+        return ((SynchronizedTabulatedFunction) function).doSynchronously(this::derive);
     }
 }
