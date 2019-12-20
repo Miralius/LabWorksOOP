@@ -8,14 +8,20 @@ public class Menu extends JFrame {
 
     public Menu() {
         setTitle("Menu");
-        setBounds(300, 200, 250, 200);
+        setBounds(300, 200, 200, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();
     }
 
     public void actionPerformed() {
-        inputButtonTable.addActionListener(event -> TabulatedFunctionWindow.main()
+        inputButtonTable.addActionListener(event -> {
+                    try {
+                        TabulatedFunctionWindow.main();
+                    } catch (Exception e) {
+                        new ErrorWindow(this, e);
+                    }
+                }
         );
     }
 

@@ -74,36 +74,43 @@ public class TabulatedFunctionWindow extends JFrame {
 
     public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
-            createButton.setEnabled(false);
-            int count = Integer.parseInt(countField.getText());
-            clearTable(tableModel.getRowCount());
-            for (int i = 0; i < count; i++) {
-                xValues.add(0.);
-                yValues.add(0.);
-                tableModel.fireTableDataChanged();
-            }
-            if (tableModel.getRowCount() > 1) {
-                createButton.setEnabled(true);
+            try {
+                createButton.setEnabled(false);
+                int count = Integer.parseInt(countField.getText());
+                clearTable(tableModel.getRowCount());
+                for (int i = 0; i < count; i++) {
+                    xValues.add(0.);
+                    yValues.add(0.);
+                    tableModel.fireTableDataChanged();
+                }
+                if (tableModel.getRowCount() > 1) {
+                    createButton.setEnabled(true);
+                }
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
             }
         });
-
     }
 
     public void addListenerForCreateButton() {
         createButton.addActionListener(event -> {
-            double[] x = new double[xValues.size()];
-            double[] y = new double[xValues.size()];
-            x[0] = xValues.get(0);
-            y[0] = yValues.get(0);
-            for (int i = 1; i < xValues.size(); i++) {
-                if (xValues.get(i - 1) > xValues.get(i)) {
-                    throw new ArrayIsNotSortedException();
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
                 }
-                x[i] = xValues.get(i);
-                y[i] = yValues.get(i);
+                function = factory.create(x, y);
+                this.dispose();
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
             }
-            function = factory.create(x, y);
-            this.dispose();
         });
     }
 
