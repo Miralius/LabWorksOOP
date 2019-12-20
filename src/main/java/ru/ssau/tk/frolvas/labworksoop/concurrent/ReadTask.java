@@ -2,10 +2,10 @@ package ru.ssau.tk.frolvas.labworksoop.concurrent;
 
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 
-public class ReadClass implements Runnable {
+public class ReadTask implements Runnable {
     final private TabulatedFunction tabulatedFunction;
 
-    public ReadClass(TabulatedFunction tabulatedFunction) {
+    public ReadTask(TabulatedFunction tabulatedFunction) {
         this.tabulatedFunction = tabulatedFunction;
     }
 
