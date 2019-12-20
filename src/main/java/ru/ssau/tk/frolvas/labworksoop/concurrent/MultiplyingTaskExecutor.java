@@ -7,7 +7,7 @@ import java.util.*;
 public class MultiplyingTaskExecutor {
 
     public static void main(String[] args) {
-        TabulatedFunction function = new LinkedListTabulatedFunction(new UnitFunction(), 0, 1000, 10000);
+        TabulatedFunction function = new LinkedListTabulatedFunction(new UnitFunction(), 0, 1000, 20000);
         List<Thread> threads = new ArrayList<>();
         ArrayList<MultiplyingTask> collection = new ArrayList<>();
         for (int i = 0; i < Runtime.getRuntime().availableProcessors() + 1; i++) {

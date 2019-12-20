@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import ru.ssau.tk.frolvas.labworksoop.functions.*;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
@@ -69,7 +70,7 @@ public class SynchronizedTabulatedFunctionTest {
     public void testIndexOfY() {
         assertEquals(syncFirstList.indexOfY(9.0), 3);
         assertEquals(syncSecondList.indexOfY(36.0), 5);
-        assertEquals(syncFirstArray.indexOfY(7.0), 1);
+        assertEquals(syncFirstArray.indexOfY(10.0), 4);
         assertEquals(syncSecondArray.indexOfY(81.0), 8);
     }
 
@@ -106,10 +107,23 @@ public class SynchronizedTabulatedFunctionTest {
             assertEquals(syncFirstArray.getX(i), point.x, 0.0001);
             assertEquals(syncFirstArray.getY(i++), point.y, 0.0001);
         }
+        assertThrows(NoSuchElementException.class, iteratorArray::next);
         i = 0;
         for (Point point : syncFirstArray) {
             assertEquals(syncFirstArray.getX(i), point.x, 0.0001);
             assertEquals(syncFirstArray.getY(i++), point.y, 0.0001);
         }
+        assertThrows(NoSuchElementException.class, iteratorArray::next);
+    }
+
+    @Test
+    public void testDoSynchronously() {
+        assertEquals((int) syncFirstArray.doSynchronously(SynchronizedTabulatedFunction::getCount), 5);
+        assertEquals(syncFirstArray.doSynchronously(syncFirstArray -> syncFirstArray.tabulatedFunction.apply(4.)), 9.);
+        assertEquals(syncFirstArray.doSynchronously(SynchronizedTabulatedFunction::rightBound), 5.);
+        assertNull(syncFirstArray.doSynchronously(x -> {
+            x.setY(1, 2);
+            return null;
+        }));
     }
 }
