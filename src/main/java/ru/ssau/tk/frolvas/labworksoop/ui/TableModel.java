@@ -72,11 +72,11 @@ public class TableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case INDEX_COLUMN_NUMBER:
-                return "Index";
+                return "Индекс";
             case X_COLUMN_NUMBER:
-                return "xValues";
+                return "X";
             case Y_COLUMN_NUMBER:
-                return "yValues";
+                return "Y";
         }
         return super.getColumnName(column);
     }

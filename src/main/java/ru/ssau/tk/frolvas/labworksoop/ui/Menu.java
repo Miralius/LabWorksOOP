@@ -4,11 +4,11 @@ import javax.swing.*;
 
 public class Menu extends JFrame {
     private JFrame frame;
-    private JButton inputButtonTable = new JButton("Create the table");
+    private JButton inputButtonTable = new JButton("Создать табулированную функцию");
 
     public Menu() {
-        setTitle("Menu");
-        setBounds(300, 200, 200, 200);
+        setTitle("Функции");
+        setBounds(300, 200, 800, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();

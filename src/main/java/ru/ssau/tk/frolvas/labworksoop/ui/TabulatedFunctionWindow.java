@@ -14,10 +14,10 @@ public class TabulatedFunctionWindow extends JFrame {
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new TableModel(xValues, yValues);
     JTable table = new JTable(tableModel);
-    private JLabel label = new JLabel("Input number of points:");
+    private JLabel label = new JLabel("Введите количество точек:");
     private JTextField countField = new JTextField();
-    private JButton inputButton = new JButton("Input");
-    private JButton createButton = new JButton("Create");
+    private JButton inputButton = new JButton("Ввести");
+    private JButton createButton = new JButton("Создать");
     TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
     TabulatedFunction function;
 

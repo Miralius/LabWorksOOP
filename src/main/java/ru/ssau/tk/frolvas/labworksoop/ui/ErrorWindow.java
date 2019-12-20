@@ -14,23 +14,23 @@ public class ErrorWindow {
 
     public void showErrorWindow(Component parent, Exception e) {
         String head = generateMessageForException(e);
-        JOptionPane.showMessageDialog(parent, "Error!", head, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, "Ошибка!", head, JOptionPane.ERROR_MESSAGE);
     }
 
     private String generateMessageForException(Exception e) {
         if (e instanceof NumberFormatException) {
-            return "Wrong number format";
+            return "Неверный формат числа";
         }
         if (e instanceof ArrayIsNotSortedException) {
-            return "Array isn't sorted";
+            return "Массив точек неотсортирован";
         }
         if (e instanceof IOException) {
-            return "File is missed";
+            return "Файл не найден или повреждён";
         }
         if (e instanceof InconsistentFunctionsException) {
-            return "Values are different";
+            return "Длина массивов неодинакова";
         }
-        return "Unknown error";
+        return "Неизвестная ошибка";
     }
 
 }
