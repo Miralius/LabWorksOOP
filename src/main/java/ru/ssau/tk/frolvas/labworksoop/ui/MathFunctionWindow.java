@@ -7,9 +7,9 @@ import java.util.*;
 
 public class MathFunctionWindow extends JFrame {
     private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JLabel fromLabel = new JLabel("РћС‚:");
-    private JLabel toLabel = new JLabel("Р”Рѕ:");
-    private JLabel countLabel = new JLabel("РљРѕР»РёС‡РµСЃС‚РІРѕ:");
+    private JLabel fromLabel = new JLabel("От:");
+    private JLabel toLabel = new JLabel("До:");
+    private JLabel countLabel = new JLabel("Количество:");
     private JTextField countField = new JTextField();
     private JTextField fromField = new JTextField();
     private JTextField toField = new JTextField();
@@ -45,12 +45,12 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public void fillMap() {
-        nameFunctionMap.put("РљРІР°РґСЂР°С‚РёС‡РЅР°СЏ С„СѓРЅРєС†РёСЏ", new SqrFunction());
-        nameFunctionMap.put("РќСѓР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ", new ZeroFunction());
-        nameFunctionMap.put("Р•РґРёРЅРёС‡РЅР°СЏ С„СѓРЅРєС†РёСЏ", new UnitFunction());
-        nameFunctionMap.put("РљСѓР±РёС‡РµСЃРєР°СЏ С„СѓРЅРєС†РёСЏ", new Cube());
-        nameFunctionMap.put("РўРѕР¶РґРµСЃС‚РІРµРЅРЅР°СЏ С„СѓРЅРєС†РёСЏ", new IdentityFunction());
-        nameFunctionMap.put("Р¤СѓРЅРєС†РёСЏ РєРІР°РґСЂР°С‚РЅРѕРіРѕ РєРѕСЂРЅСЏ", new SqrtFunction());
+        nameFunctionMap.put("Квадратичная функция", new SqrFunction());
+        nameFunctionMap.put("Нулевая функция", new ZeroFunction());
+        nameFunctionMap.put("Единичная функция", new UnitFunction());
+        nameFunctionMap.put("Кубическая функция", new Cube());
+        nameFunctionMap.put("Тождественная функция", new IdentityFunction());
+        nameFunctionMap.put("Функция квадратного корня", new SqrtFunction());
         String[] functions = new String[6];
         int i = 0;
         for (String string : nameFunctionMap.keySet()) {
