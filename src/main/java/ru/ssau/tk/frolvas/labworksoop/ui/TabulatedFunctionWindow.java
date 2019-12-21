@@ -8,29 +8,30 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class TabulatedFunctionWindow extends JDialog {
-    List<Double> xValues = new ArrayList<>();
-    List<Double> yValues = new ArrayList<>();
-    AbstractTableModel tableModel = new TableModel(xValues, yValues);
-    JTable table = new JTable(tableModel);
+    private List<Double> xValues = new ArrayList<>();
+    private List<Double> yValues = new ArrayList<>();
+    private AbstractTableModel tableModel = new TableModel(xValues, yValues);
+    private JTable table = new JTable(tableModel);
     private JLabel label = new JLabel("Введите количество точек:");
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Ввести");
     private JButton createButton = new JButton("Создать");
-    TabulatedFunctionFactory factory;
-    TabulatedFunction function;
+    private TabulatedFunctionFactory factory;
+    private TabulatedFunction function;
 
-    public static void main(TabulatedFunctionFactory factory) {
-        TabulatedFunctionWindow app = new TabulatedFunctionWindow(factory);
+    public static void main(TabulatedFunctionFactory factory,  Consumer<? super TabulatedFunction> callback) {
+        TabulatedFunctionWindow app = new TabulatedFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
-    public TabulatedFunctionWindow(TabulatedFunctionFactory factory) {
+    public TabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
         this.setBounds(300, 300, 500, 500);
         this.factory = factory;
-        addButtonListeners();
+        addButtonListeners(callback);
         compose();
         inputButton.setEnabled(false);
         createButton.setEnabled(false);
@@ -60,9 +61,9 @@ public class TabulatedFunctionWindow extends JDialog {
         );
     }
 
-    public void addButtonListeners() {
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         addListenerForInputButton();
-        addListenerForCreateButton();
+        addListenerForCreateButton(callback);
         addListenerForCountButton();
     }
 
@@ -94,7 +95,7 @@ public class TabulatedFunctionWindow extends JDialog {
         });
     }
 
-    public void addListenerForCreateButton() {
+    public void addListenerForCreateButton(Consumer<? super TabulatedFunction> callback) {
         createButton.addActionListener(event -> {
             try {
                 double[] x = new double[xValues.size()];
@@ -109,6 +110,7 @@ public class TabulatedFunctionWindow extends JDialog {
                     y[i] = yValues.get(i);
                 }
                 function = factory.create(x, y);
+                callback.accept(function);
                 this.dispose();
             } catch (Exception e) {
                 new ErrorWindow(this, e);

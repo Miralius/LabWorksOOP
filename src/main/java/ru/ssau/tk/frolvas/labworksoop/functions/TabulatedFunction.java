@@ -16,4 +16,5 @@ public interface TabulatedFunction extends MathFunction, Iterable<Point> {
     double leftBound();
 
     double rightBound();
+
 }
