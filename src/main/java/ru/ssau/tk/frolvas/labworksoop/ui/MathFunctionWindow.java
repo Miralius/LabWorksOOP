@@ -5,7 +5,7 @@ import ru.ssau.tk.frolvas.labworksoop.functions.*;
 import javax.swing.*;
 import java.util.*;
 
-public class MathFunctionWindow extends JFrame {
+public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("От:");
     private JLabel toLabel = new JLabel("До:");
@@ -28,7 +28,7 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public MathFunctionWindow(TabulatedFunction function) {
-        super("CreateFunc");
+        setModal(true);
         this.function = function;
         this.setBounds(300, 200, 500, 150);
         fillMap();
@@ -37,7 +37,7 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public MathFunctionWindow() {
-        super("CreateFunc");
+        setModal(true);
         this.setBounds(300, 200, 500, 150);
         fillMap();
         compose();

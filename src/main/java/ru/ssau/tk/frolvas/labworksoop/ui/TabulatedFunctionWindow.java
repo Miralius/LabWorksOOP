@@ -9,7 +9,7 @@ import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
 
-public class TabulatedFunctionWindow extends JFrame {
+public class TabulatedFunctionWindow extends JDialog {
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new TableModel(xValues, yValues);
@@ -27,6 +27,7 @@ public class TabulatedFunctionWindow extends JFrame {
     }
 
     public TabulatedFunctionWindow() {
+        setModal(true);
         this.setBounds(300, 300, 500, 500);
         addButtonListeners();
         compose();
