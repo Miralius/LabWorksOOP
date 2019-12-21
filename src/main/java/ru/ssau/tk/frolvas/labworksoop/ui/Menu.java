@@ -28,16 +28,25 @@ public class Menu extends JFrame {
         this.factory = new ArrayTabulatedFunctionFactory();
     }
 
+    public void wrapTable(int countOld, int countNew) {
+        for (int i = 0; i < countOld; i++) {
+            xValues.remove(countOld - i - 1);
+            yValues.remove(countOld - i - 1);
+            tableModel.fireTableDataChanged();
+        }
+        for (int i = 0; i < countNew; i++) {
+            xValues.add(function.getX(i));
+            yValues.add(function.getY(i));
+        }
+    }
+
     public void actionPerformed() {
         inputButtonTable.addActionListener(event -> {
                     try {
-                        TabulatedFunctionWindow.main(factory, data -> {this.function = data;});
-                        int count = function.getCount();
-                        tableModel.fireTableDataChanged();
-                        for (int i = 0; i < count; i++) {
-                            xValues.add(function.getX(i));
-                            yValues.add(function.getY(i));
-                        }
+                        int countOld = xValues.size();
+                        TabulatedFunctionWindow.main(factory, data -> this.function = data);
+                        int countNew = function.getCount();
+                        wrapTable(countOld, countNew);
                     } catch (Exception e) {
                         new ErrorWindow(this, e);
                     }
@@ -45,7 +54,10 @@ public class Menu extends JFrame {
         );
         inputButtonMath.addActionListener(event -> {
             try {
-                MathFunctionWindow.main(factory);
+                int countOld = xValues.size();
+                MathFunctionWindow.main(factory, data -> this.function = data);
+                int countNew = function.getCount();
+                wrapTable(countOld, countNew);
             } catch (Exception e) {
                 new ErrorWindow(this, e);
             }

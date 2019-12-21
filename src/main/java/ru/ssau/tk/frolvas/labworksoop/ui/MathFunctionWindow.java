@@ -5,6 +5,7 @@ import ru.ssau.tk.frolvas.labworksoop.functions.factory.TabulatedFunctionFactory
 
 import javax.swing.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
@@ -19,17 +20,17 @@ public class MathFunctionWindow extends JDialog {
     TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
-    public MathFunctionWindow(TabulatedFunctionFactory factory) {
+    public MathFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
         this.factory = factory;
         this.setBounds(300, 200, 500, 150);
         fillMap();
         compose();
-        addButtonListeners();
+        addButtonListeners(callback);
     }
 
-    public static void main(TabulatedFunctionFactory factory) {
-        MathFunctionWindow app = new MathFunctionWindow(factory);
+    public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        MathFunctionWindow app = new MathFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
@@ -80,7 +81,7 @@ public class MathFunctionWindow extends JDialog {
         );
     }
 
-    public void addButtonListeners() {
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         okButton.addActionListener(event -> {
             try {
                 String func = (String) functionComboBox.getSelectedItem();
@@ -89,6 +90,7 @@ public class MathFunctionWindow extends JDialog {
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
                 function = factory.create(selectedFunction, from, to, count);
+                callback.accept(function);
                 this.dispose();
             } catch (Exception e) {
                 ErrorWindow errorWindow = new ErrorWindow(this, e);
