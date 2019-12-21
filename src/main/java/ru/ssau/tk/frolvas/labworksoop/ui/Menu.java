@@ -5,6 +5,7 @@ import javax.swing.*;
 public class Menu extends JFrame {
     private JFrame frame;
     private JButton inputButtonTable = new JButton("Создать табулированную функцию");
+    private JButton inputButtonMath = new JButton("Создать простую функцию");
 
     public Menu() {
         setTitle("Функции");
@@ -23,7 +24,15 @@ public class Menu extends JFrame {
                     }
                 }
         );
+        inputButtonMath.addActionListener(event -> {
+            try {
+                MathFunctionWindow.main();
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
+            }
+        });
     }
+
 
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -32,10 +41,12 @@ public class Menu extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
+                        .addComponent(inputButtonMath)
                         .addComponent(inputButtonTable))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(inputButtonMath)
                         .addComponent(inputButtonTable))
         );
     }
