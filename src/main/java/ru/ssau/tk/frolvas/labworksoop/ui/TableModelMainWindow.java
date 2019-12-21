@@ -41,13 +41,7 @@ public class TableModelMainWindow extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
-        if (columnIndex == X_COLUMN_NUMBER) {
-            try {
-                xValues.set(rowIndex, Double.valueOf(aValue.toString()));
-            } catch (Exception e) {
-                xValues.set(rowIndex, 0.0);
-            }
-        } else if (columnIndex == Y_COLUMN_NUMBER) {
+        if (columnIndex == Y_COLUMN_NUMBER) {
             try {
                 yValues.set(rowIndex, Double.valueOf(aValue.toString()));
             } catch (Exception e) {
@@ -61,8 +55,9 @@ public class TableModelMainWindow extends AbstractTableModel {
         switch (columnIndex) {
             case INDEX_COLUMN_NUMBER:
             case X_COLUMN_NUMBER:
-            case Y_COLUMN_NUMBER:
                 return false;
+            case Y_COLUMN_NUMBER:
+                return true;
         }
         return false;
     }

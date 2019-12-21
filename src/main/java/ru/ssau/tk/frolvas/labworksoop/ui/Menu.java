@@ -50,7 +50,10 @@ public class Menu extends JFrame {
                         int countNew = function.getCount();
                         wrapTable(countOld, countNew);
                     } catch (Exception e) {
-                        new ErrorWindow(this, e);
+                        if (e instanceof NullPointerException) {
+                            e.getStackTrace();
+                        } else
+                            new ErrorWindow(this, e);
                     }
                 }
         );
@@ -61,14 +64,20 @@ public class Menu extends JFrame {
                 int countNew = function.getCount();
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
-                new ErrorWindow(this, e);
+                if (e instanceof NullPointerException) {
+                    e.getStackTrace();
+                } else
+                    new ErrorWindow(this, e);
             }
         });
         inputButtonFactory.addActionListener(event -> {
             try {
                 SettingWindow.main(factory);
             } catch (Exception e) {
-                new ErrorWindow(this, e);
+                if (e instanceof NullPointerException) {
+                    e.getStackTrace();
+                } else
+                    new ErrorWindow(this, e);
             }
         });
         openButton.addActionListener(event -> {
@@ -78,17 +87,27 @@ public class Menu extends JFrame {
                 int countNew = function.getCount();
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
-                new ErrorWindow(this, e);
+                if (e instanceof NullPointerException) {
+                    e.getStackTrace();
+                } else
+                    new ErrorWindow(this, e);
             }
         });
         saveButton.addActionListener(event -> {
             try {
-                int countOld = xValues.size();
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                for (int i = 0; i < xValues.size(); i++) {
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
+                }
+                function = factory.create(x, y);
                 FileWriter.main(function);
-                int countNew = function.getCount();
-                wrapTable(countOld, countNew);
             } catch (Exception e) {
-                new ErrorWindow(this, e);
+                if (e instanceof NullPointerException) {
+                    e.getStackTrace();
+                } else
+                    new ErrorWindow(this, e);
             }
         });
     }
