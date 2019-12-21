@@ -16,7 +16,7 @@ public class Menu extends JFrame {
     private JButton saveButton = new JButton("Сохранить функцию");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
-    private AbstractTableModel tableModel = new TableModel(xValues, yValues);
+    private AbstractTableModel tableModel = new TableModelMainWindow(xValues, yValues);
     private JTable table = new JTable(tableModel);
     private TabulatedFunctionFactory factory;
     private TabulatedFunction function;
