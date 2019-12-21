@@ -18,22 +18,24 @@ public class TabulatedFunctionWindow extends JDialog {
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Ввести");
     private JButton createButton = new JButton("Создать");
-    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+    TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
-    public static void main() {
-        TabulatedFunctionWindow app = new TabulatedFunctionWindow();
+    public static void main(TabulatedFunctionFactory factory) {
+        TabulatedFunctionWindow app = new TabulatedFunctionWindow(factory);
         app.setVisible(true);
     }
 
-    public TabulatedFunctionWindow() {
+    public TabulatedFunctionWindow(TabulatedFunctionFactory factory) {
         setModal(true);
         this.setBounds(300, 300, 500, 500);
+        this.factory = factory;
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);
         createButton.setEnabled(false);
     }
+
 
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
