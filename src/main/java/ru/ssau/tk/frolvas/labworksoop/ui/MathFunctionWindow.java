@@ -16,32 +16,20 @@ public class MathFunctionWindow extends JDialog {
     private JButton okButton = new JButton("OK");
     private Map<String, MathFunction> nameFunctionMap = new HashMap<>();
     TabulatedFunction function;
+    TabulatedFunctionFactory factory;
 
-    public static void main() {
-        MathFunctionWindow app = new MathFunctionWindow();
-        app.setVisible(true);
-    }
-
-    public static void main(TabulatedFunction function) {
-        MathFunctionWindow app = new MathFunctionWindow(function);
-        app.setVisible(true);
-    }
-
-    public MathFunctionWindow(TabulatedFunction function) {
+    public MathFunctionWindow(TabulatedFunctionFactory factory) {
         setModal(true);
-        this.function = function;
+        this.factory = factory;
         this.setBounds(300, 200, 500, 150);
         fillMap();
         compose();
         addButtonListeners();
     }
 
-    public MathFunctionWindow() {
-        setModal(true);
-        this.setBounds(300, 200, 500, 150);
-        fillMap();
-        compose();
-        addButtonListeners();
+    public static void main(TabulatedFunctionFactory factory) {
+        MathFunctionWindow app = new MathFunctionWindow(factory);
+        app.setVisible(true);
     }
 
     public void fillMap() {
@@ -99,7 +87,7 @@ public class MathFunctionWindow extends JDialog {
                 double from = Double.parseDouble(fromField.getText());
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
-                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+                function = factory.create(selectedFunction, from, to, count);
                 this.dispose();
             } catch (Exception e) {
                 ErrorWindow errorWindow = new ErrorWindow(this, e);
