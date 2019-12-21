@@ -1,6 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.ui;
 
 import ru.ssau.tk.frolvas.labworksoop.functions.*;
+import ru.ssau.tk.frolvas.labworksoop.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
 import java.util.*;
@@ -15,8 +16,8 @@ public class MathFunctionWindow extends JDialog {
     private JTextField toField = new JTextField();
     private JButton okButton = new JButton("OK");
     private Map<String, MathFunction> nameFunctionMap = new HashMap<>();
-    TabulatedFunction function;
     TabulatedFunctionFactory factory;
+    TabulatedFunction function;
 
     public MathFunctionWindow(TabulatedFunctionFactory factory) {
         setModal(true);

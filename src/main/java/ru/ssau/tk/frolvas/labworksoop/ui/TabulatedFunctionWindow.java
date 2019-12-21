@@ -36,7 +36,6 @@ public class TabulatedFunctionWindow extends JDialog {
         createButton.setEnabled(false);
     }
 
-
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

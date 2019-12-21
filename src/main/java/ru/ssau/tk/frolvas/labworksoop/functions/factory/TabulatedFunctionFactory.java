@@ -8,4 +8,6 @@ public interface TabulatedFunctionFactory {
     default TabulatedFunction createStrict(double[] xValues, double[] yValues) {
         return new StrictTabulatedFunction(create(xValues, yValues));
     }
+
+    TabulatedFunction create(MathFunction source, double xFrom, double xTo, int count);
 }
