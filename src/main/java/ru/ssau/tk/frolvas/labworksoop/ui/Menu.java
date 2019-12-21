@@ -12,6 +12,8 @@ public class Menu extends JFrame {
     private JButton inputButtonTable = new JButton("Создать табулированную функцию");
     private JButton inputButtonMath = new JButton("Создать простую функцию");
     private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
+    private JButton openButton = new JButton("Открыть функцию");
+    private JButton saveButton = new JButton("Сохранить функцию");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private AbstractTableModel tableModel = new TableModel(xValues, yValues);
@@ -21,7 +23,7 @@ public class Menu extends JFrame {
 
     public Menu() {
         setTitle("Функции");
-        setBounds(300, 200, 800, 600);
+        setBounds(300, 200, 1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();
@@ -29,10 +31,10 @@ public class Menu extends JFrame {
     }
 
     public void wrapTable(int countOld, int countNew) {
+        tableModel.fireTableDataChanged();
         for (int i = 0; i < countOld; i++) {
-            xValues.remove(countOld - i - 1);
-            yValues.remove(countOld - i - 1);
-            tableModel.fireTableDataChanged();
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
         }
         for (int i = 0; i < countNew; i++) {
             xValues.add(function.getX(i));
@@ -69,6 +71,26 @@ public class Menu extends JFrame {
                 new ErrorWindow(this, e);
             }
         });
+        openButton.addActionListener(event -> {
+            try {
+                int countOld = xValues.size();
+                FileReader.main(data -> this.function = data);
+                int countNew = function.getCount();
+                wrapTable(countOld, countNew);
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
+            }
+        });
+        saveButton.addActionListener(event -> {
+            try {
+                int countOld = xValues.size();
+                FileWriter.main(function);
+                int countNew = function.getCount();
+                wrapTable(countOld, countNew);
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
+            }
+        });
     }
 
     void compose() {
@@ -81,14 +103,18 @@ public class Menu extends JFrame {
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(inputButtonTable)
                         .addComponent(inputButtonMath)
-                        .addComponent(inputButtonFactory))
+                        .addComponent(inputButtonFactory)
+                        .addComponent(openButton)
+                        .addComponent(saveButton))
                 .addComponent(tableScrollPane)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(inputButtonTable)
                         .addComponent(inputButtonMath)
-                        .addComponent(inputButtonFactory))
+                        .addComponent(inputButtonFactory)
+                        .addComponent(openButton)
+                        .addComponent(saveButton))
                 .addComponent(tableScrollPane)
         );
     }
