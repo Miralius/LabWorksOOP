@@ -30,7 +30,12 @@ public class ErrorWindow {
         if (e instanceof InconsistentFunctionsException) {
             return "Длина массивов неодинакова";
         }
-        return "Неизвестная ошибка";
+        if (e instanceof IllegalArgumentException) {
+            return "Нет функции для сохранения";
+        }
+        {
+            e.printStackTrace();
+            return "Неизвестная ошибка";
+        }
     }
-
 }

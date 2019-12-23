@@ -8,7 +8,6 @@ import javax.swing.table.AbstractTableModel;
 import java.util.*;
 
 public class Menu extends JFrame {
-    private JFrame frame;
     private JButton inputButtonTable = new JButton("Создать табулированную функцию");
     private JButton inputButtonMath = new JButton("Создать простую функцию");
     private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
@@ -51,7 +50,7 @@ public class Menu extends JFrame {
                         wrapTable(countOld, countNew);
                     } catch (Exception e) {
                         if (e instanceof NullPointerException) {
-                            e.getStackTrace();
+                            e.printStackTrace();
                         } else
                             new ErrorWindow(this, e);
                     }
@@ -65,7 +64,7 @@ public class Menu extends JFrame {
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
-                    e.getStackTrace();
+                    e.printStackTrace();
                 } else
                     new ErrorWindow(this, e);
             }
@@ -75,7 +74,7 @@ public class Menu extends JFrame {
                 SettingWindow.main(factory);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
-                    e.getStackTrace();
+                    e.printStackTrace();
                 } else
                     new ErrorWindow(this, e);
             }
@@ -88,7 +87,7 @@ public class Menu extends JFrame {
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
-                    e.getStackTrace();
+                    e.printStackTrace();
                 } else
                     new ErrorWindow(this, e);
             }
@@ -105,7 +104,7 @@ public class Menu extends JFrame {
                 FileWriter.main(function);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
-                    e.getStackTrace();
+                    e.printStackTrace();
                 } else
                     new ErrorWindow(this, e);
             }
