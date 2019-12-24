@@ -1,5 +1,7 @@
 package ru.ssau.tk.frolvas.labworksoop.ui;
 
+import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -9,6 +11,7 @@ public class TableModelMainWindow extends AbstractTableModel {
     private static final int Y_COLUMN_NUMBER = 2;
     private List<Double> xValues;
     private List<Double> yValues;
+    private TabulatedFunction function;
 
     public TableModelMainWindow(List<Double> xValues, List<Double> yValues) {
         this.xValues = xValues;
@@ -75,5 +78,12 @@ public class TableModelMainWindow extends AbstractTableModel {
         return super.getColumnName(column);
     }
 
+    public TabulatedFunction getFunction() {
+        return function;
+    }
+
+    public void setFunction(TabulatedFunction function) {
+        this.function = function;
+    }
 }
 

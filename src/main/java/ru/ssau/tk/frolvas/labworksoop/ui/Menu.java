@@ -1,10 +1,8 @@
 package ru.ssau.tk.frolvas.labworksoop.ui;
 
-import ru.ssau.tk.frolvas.labworksoop.functions.*;
 import ru.ssau.tk.frolvas.labworksoop.functions.factory.*;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.util.*;
 
 public class Menu extends JFrame {
@@ -15,10 +13,9 @@ public class Menu extends JFrame {
     private JButton saveButton = new JButton("Сохранить функцию");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
-    private AbstractTableModel tableModel = new TableModelMainWindow(xValues, yValues);
+    private TableModelMainWindow tableModel = new TableModelMainWindow(xValues, yValues);
     private JTable table = new JTable(tableModel);
     private TabulatedFunctionFactory factory;
-    private TabulatedFunction function;
 
     public Menu() {
         setTitle("Функции");
@@ -36,8 +33,8 @@ public class Menu extends JFrame {
             if (yValues.size() != 0) yValues.remove(countOld - i - 1);
         }
         for (int i = 0; i < countNew; i++) {
-            xValues.add(function.getX(i));
-            yValues.add(function.getY(i));
+            xValues.add(tableModel.getFunction().getX(i));
+            yValues.add(tableModel.getFunction().getY(i));
         }
     }
 
@@ -45,8 +42,8 @@ public class Menu extends JFrame {
         inputButtonTable.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
-                        TabulatedFunctionWindow.main(factory, data -> this.function = data);
-                        int countNew = function.getCount();
+                        TabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
+                        int countNew = tableModel.getFunction().getCount();
                         wrapTable(countOld, countNew);
                     } catch (Exception e) {
                         if (e instanceof NullPointerException) {
@@ -59,8 +56,8 @@ public class Menu extends JFrame {
         inputButtonMath.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                MathFunctionWindow.main(factory, data -> this.function = data);
-                int countNew = function.getCount();
+                MathFunctionWindow.main(factory, data -> tableModel.setFunction(data));
+                int countNew = tableModel.getFunction().getCount();
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
@@ -82,8 +79,8 @@ public class Menu extends JFrame {
         openButton.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                FileReader.main(data -> this.function = data);
-                int countNew = function.getCount();
+                FileReader.main(data -> tableModel.setFunction(data));
+                int countNew = tableModel.getFunction().getCount();
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
@@ -100,8 +97,8 @@ public class Menu extends JFrame {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                function = factory.create(x, y);
-                FileWriter.main(function);
+                tableModel.setFunction(factory.create(x, y));
+                FileWriter.main(tableModel.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
