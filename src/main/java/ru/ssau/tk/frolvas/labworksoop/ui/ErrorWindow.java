@@ -31,7 +31,7 @@ public class ErrorWindow {
             return "Длина массивов неодинакова";
         }
         if (e instanceof IllegalArgumentException) {
-            return "Нет функции для сохранения";
+            return "Задана некорректная функция";
         }
         {
             e.printStackTrace();
