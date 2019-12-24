@@ -3,24 +3,19 @@ package ru.ssau.tk.frolvas.labworksoop.ui;
 import ru.ssau.tk.frolvas.labworksoop.functions.TabulatedFunction;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
 
 public class TableModelMainWindow extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    private List<Double> xValues;
-    private List<Double> yValues;
     private TabulatedFunction function;
 
-    public TableModelMainWindow(List<Double> xValues, List<Double> yValues) {
-        this.xValues = xValues;
-        this.yValues = yValues;
+    public TableModelMainWindow() {
     }
 
     @Override
     public int getRowCount() {
-        return xValues.size();
+        return (function == null) ? 0 : function.getCount();
     }
 
     @Override
@@ -34,9 +29,9 @@ public class TableModelMainWindow extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return rowIndex;
             case X_COLUMN_NUMBER:
-                return xValues.get(rowIndex);
+                return function.getX(rowIndex);
             case Y_COLUMN_NUMBER:
-                return yValues.get(rowIndex);
+                return function.getY(rowIndex);
         }
         throw new UnsupportedOperationException();
     }
@@ -46,9 +41,9 @@ public class TableModelMainWindow extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == Y_COLUMN_NUMBER) {
             try {
-                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+                function.setY(rowIndex, Double.parseDouble(aValue.toString()));
             } catch (Exception e) {
-                yValues.set(rowIndex, 0.0);
+                function.setY(rowIndex, 0.0);
             }
         }
     }

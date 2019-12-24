@@ -13,7 +13,7 @@ public class Menu extends JFrame {
     private JButton saveButton = new JButton("Сохранить функцию");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
-    private TableModelMainWindow tableModel = new TableModelMainWindow(xValues, yValues);
+    private TableModelMainWindow tableModel = new TableModelMainWindow();
     private JTable table = new JTable(tableModel);
     private TabulatedFunctionFactory factory;
 
@@ -91,13 +91,6 @@ public class Menu extends JFrame {
         });
         saveButton.addActionListener(event -> {
             try {
-                double[] x = new double[xValues.size()];
-                double[] y = new double[xValues.size()];
-                for (int i = 0; i < xValues.size(); i++) {
-                    x[i] = xValues.get(i);
-                    y[i] = yValues.get(i);
-                }
-                tableModel.setFunction(factory.create(x, y));
                 FileWriter.main(tableModel.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
